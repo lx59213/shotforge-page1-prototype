@@ -6,6 +6,7 @@
 
 - `server.mjs`: tiny dependency-free Node server with static hosting and mock API routes.
 - `index.html`: GitHub Pages entry that redirects to the static prototype.
+- `.gitignore`: keeps generated screenshots and macOS metadata out of the public repo.
 - `api/generate.js`: Vercel mock endpoint for storyboard generation.
 - `api/save.js`: Vercel mock endpoint for saving a confirmation version.
 - `vercel.json`: rewrites static assets and API routes for online preview.
@@ -31,3 +32,4 @@ The storyboard table is the artifact. AI, login, library, model choice, permissi
 - 2026-06-04: Removed overbuilt visual layers; tightened MVP flow and added editable storyboard interactions.
 - 2026-06-04: Added Vercel API shims so the deployed prototype keeps generation and save flows alive.
 - 2026-06-04: Added a GitHub Pages root entry for static public preview.
+- 2026-06-04: Ignored local verification screenshots so the deployed repo stays clean.
