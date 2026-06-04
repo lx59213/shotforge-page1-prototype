@@ -43,6 +43,12 @@ button {
   text-align: center;
 }
 
+h1,
+h2,
+.brand-lockup strong {
+  text-wrap: balance;
+}
+
 .hidden {
   display: none !important;
 }
@@ -74,9 +80,12 @@ button {
 .login-copy h1 {
   margin: var(--space-4) 0 var(--space-3);
   font-family: var(--font-display);
-  font-size: clamp(40px, 5vw, 60px);
-  line-height: 1.04;
+  width: max-content;
+  max-width: 100%;
+  font-size: clamp(56px, 8vw, 96px);
+  line-height: .94;
   letter-spacing: 0;
+  white-space: nowrap;
 }
 
 .login-copy p:not(.kicker) {
@@ -163,7 +172,7 @@ button:focus-visible {
 .side-rail {
   display: flex;
   flex-direction: column;
-  gap: var(--space-5);
+  gap: var(--space-4);
   padding: 22px 14px;
   background: color-mix(in oklch, var(--rail) 94%, var(--surface));
   border-right: 1px solid var(--line);
@@ -230,25 +239,101 @@ button:focus-visible {
   color: var(--primary-text);
 }
 
-.account-card {
+.rail-system {
   margin-top: auto;
   display: grid;
   gap: var(--space-2);
-  padding: var(--space-4);
+  padding-top: var(--space-3);
+  border-top: 1px solid color-mix(in oklch, var(--line) 72%, transparent);
+}
+
+.system-link,
+.account-card {
+  width: 100%;
+  border: 1px solid transparent;
+  color: var(--ink);
+  cursor: pointer;
+  text-align: left;
+}
+
+.system-link {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  background: transparent;
+  padding: 0 var(--space-3);
+  font-weight: 850;
+  transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+}
+
+.system-link:hover {
+  transform: translateY(-1px);
+  background: color-mix(in oklch, var(--primary-soft) 70%, transparent);
+}
+
+.system-link.active {
+  border-color: color-mix(in oklch, var(--primary) 20%, var(--line));
+  background: var(--primary-soft);
+  color: var(--primary-text);
+}
+
+.account-card {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: color-mix(in oklch, var(--surface) 62%, transparent);
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), border var(--motion-fast) var(--ease-out);
 }
 
-.account-card p,
-.account-card span {
+.account-card:hover {
+  transform: translateY(-1px);
+  border-color: color-mix(in oklch, var(--primary) 24%, var(--line));
+  box-shadow: var(--shadow-hover);
+}
+
+.account-card.active {
+  border-color: color-mix(in oklch, var(--primary) 24%, var(--line));
+  background: color-mix(in oklch, var(--primary-soft) 72%, var(--surface));
+}
+
+.account-avatar {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--surface);
+  background: linear-gradient(135deg, var(--primary), var(--primary-2));
+  font-weight: 900;
+}
+
+.account-copy {
+  min-width: 0;
+  display: grid;
+  gap: 2px;
+}
+
+.account-copy small,
+.account-copy em {
   margin: 0;
   color: var(--muted);
   font-size: 12px;
+  font-style: normal;
 }
 
-.account-card strong {
-  font-size: 18px;
+.account-copy strong {
+  min-width: 0;
+  overflow: hidden;
+  color: var(--ink);
+  font-size: 15px;
+  line-height: 20px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .workspace {
@@ -530,7 +615,7 @@ button:focus-visible {
 
 @media (max-width: 720px) {
   .login-copy h1 {
-    font-size: 42px;
+    font-size: clamp(54px, 18vw, 78px);
   }
 
   .compact-actions,

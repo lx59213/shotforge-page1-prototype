@@ -93,7 +93,7 @@ function renderChrome() {
   const type = accountType();
   $("#railAccountName").textContent = account().name;
   $("#railAccountType").textContent = type.name;
-  $("#accountChip").textContent = type.name;
+  $("#railAccountInitial").textContent = account().name.slice(0, 1);
   $("#topRuleBtn").textContent = skill().name.replace("脚本规则", "规则");
   $$("[data-admin-only]").forEach(item => item.classList.toggle("hidden", !canAdmin()));
   $$("[data-nav]").forEach(item => item.classList.toggle("active", item.dataset.nav === state.view));

@@ -112,7 +112,7 @@ function createApp(port) {
   });
 
   server.listen(port, () => {
-    console.log(`ScriptForge prototype running at http://127.0.0.1:${port}`);
+    console.log(`Scriptly prototype running at http://127.0.0.1:${port}`);
   });
 }
 

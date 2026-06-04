@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ScriptForge 脚本生产平台</title>
+  <title>Scriptly</title>
   <link rel="stylesheet" href="./styles/tokens.css" />
   <link rel="stylesheet" href="./styles/shell.css" />
   <link rel="stylesheet" href="./styles/app.css" />
@@ -11,8 +11,8 @@
 <body data-theme="paper">
   <section class="login-screen" id="loginScreen">
     <div class="login-copy">
-      <p class="kicker">ScriptForge</p>
-      <h1>广告脚本生产平台</h1>
+      <p class="kicker">Scriptly</p>
+      <h1>Scriptly</h1>
       <p>素材、规则、版本和导出，放进一条清爽的创作工作流。</p>
     </div>
 
@@ -28,21 +28,26 @@
   <div class="app-shell hidden" id="appShell">
     <aside class="side-rail">
       <section class="rail-brand">
-        <span class="logo-mark">SF</span>
-        <div><strong>ScriptForge</strong><small>脚本生产平台</small></div>
+        <span class="logo-mark">S</span>
+        <div><strong>Scriptly</strong><small>AI script workspace</small></div>
       </section>
 
       <nav class="rail-nav" aria-label="主导航">
         <button class="active" data-nav="work">新建项目</button>
         <button data-nav="projects">项目库</button>
-        <button data-nav="settings">设置</button>
         <button data-nav="admin" data-admin-only>后台</button>
       </nav>
 
-      <section class="account-card">
-        <p>当前账户</p>
-        <strong id="railAccountName">管理员</strong>
-        <span id="railAccountType">管理员</span>
+      <section class="rail-system" aria-label="系统">
+        <button class="system-link" data-nav="settings" type="button">设置</button>
+        <button class="account-card" data-nav="settings" type="button">
+          <span class="account-avatar" id="railAccountInitial">管</span>
+          <span class="account-copy">
+            <small>当前账户</small>
+            <strong id="railAccountName">管理员</strong>
+            <em id="railAccountType">管理员</em>
+          </span>
+        </button>
       </section>
     </aside>
 
@@ -60,7 +65,6 @@
             <button data-theme="sand" title="Muted Sand"></button>
           </div>
           <button class="chip button-chip" id="topRuleBtn" type="button">默认规则</button>
-          <span class="chip strong" id="accountChip">管理员</span>
         </div>
       </header>
 
