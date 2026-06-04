@@ -4,23 +4,27 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Scriptly</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231f7a55'/%3E%3Cpath d='M19 43h18c5 0 8-2 8-6 0-11-23-6-23-16 0-4 3-7 9-7h12' fill='none' stroke='white' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E" />
   <link rel="stylesheet" href="./styles/tokens.css" />
   <link rel="stylesheet" href="./styles/shell.css" />
+  <link rel="stylesheet" href="./styles/sidebar.css" />
   <link rel="stylesheet" href="./styles/app.css" />
+  <link rel="stylesheet" href="./styles/flow.css" />
 </head>
 <body data-theme="paper">
   <section class="login-screen" id="loginScreen">
     <div class="login-copy">
       <p class="kicker">Scriptly</p>
       <h1>Scriptly</h1>
-      <p>素材、规则、版本和导出，放进一条清爽的创作工作流。</p>
+      <p>把客户素材整理成可审、可改、可导出的广告脚本文档。</p>
     </div>
 
     <form class="login-card" id="loginForm">
       <p class="section-label">Account</p>
       <h2>登录</h2>
       <label>账号<select id="loginAccount"></select></label>
-      <label>密码<input type="password" value="prototype" /></label>
+      <input class="sr-only" id="loginUsernameMirror" name="username" autocomplete="username" tabindex="-1" aria-hidden="true" />
+      <label>密码<input type="password" autocomplete="current-password" value="prototype" /></label>
       <button class="button filled wide" type="submit">进入</button>
     </form>
   </section>
@@ -28,19 +32,30 @@
   <div class="app-shell hidden" id="appShell">
     <aside class="side-rail">
       <section class="rail-brand">
-        <span class="logo-mark">S</span>
-        <div><strong>Scriptly</strong><small>AI script workspace</small></div>
+        <button class="brand-home" id="homeBrand" type="button" aria-label="回到项目页">
+          <span class="logo-mark">S</span>
+          <span><strong>Scriptly</strong><small>AI script workspace</small></span>
+        </button>
+        <button class="rail-toggle" id="railToggle" type="button" aria-label="收起侧边栏"></button>
       </section>
 
       <nav class="rail-nav" aria-label="主导航">
-        <button class="active" data-nav="work">新建项目</button>
-        <button data-nav="projects">项目库</button>
-        <button data-nav="admin" data-admin-only>后台</button>
+        <button class="active" data-nav="projects" title="项目">
+          <span class="nav-icon icon-folder" aria-hidden="true"></span><span class="nav-text">项目</span>
+        </button>
+        <button data-nav="materials" title="素材库">
+          <span class="nav-icon icon-material" aria-hidden="true"></span><span class="nav-text">素材库</span>
+        </button>
+        <button data-nav="skills" title="Skill">
+          <span class="nav-icon icon-skill" aria-hidden="true"></span><span class="nav-text">Skill</span>
+        </button>
+        <button data-nav="admin" data-admin-only title="后台">
+          <span class="nav-icon icon-shield" aria-hidden="true"></span><span class="nav-text">后台</span>
+        </button>
       </nav>
 
-      <section class="rail-system" aria-label="系统">
-        <button class="system-link" data-nav="settings" type="button">设置</button>
-        <button class="account-card" data-nav="settings" type="button">
+      <section class="rail-system" aria-label="账户">
+        <button class="account-card" id="accountCard" type="button">
           <span class="account-avatar" id="railAccountInitial">管</span>
           <span class="account-copy">
             <small>当前账户</small>
@@ -48,84 +63,104 @@
             <em id="railAccountType">管理员</em>
           </span>
         </button>
+        <div class="account-popover" id="accountPopover" aria-hidden="true"></div>
       </section>
     </aside>
 
     <main class="workspace">
       <header class="topbar">
         <div class="brand-lockup">
-          <strong id="stageTitle">新建项目</strong>
-          <span id="stageText">上传素材，配置规则，生成第一版脚本</span>
+          <strong id="stageTitle">项目</strong>
+          <span id="stageText">新建脚本或打开现有脚本</span>
         </div>
         <div class="top-actions">
-          <div class="theme-picker" aria-label="主题色">
-            <button data-theme="paper" class="active" title="Paper Green"></button>
-            <button data-theme="mineral" title="Mineral Blue"></button>
-            <button data-theme="ink" title="Ink Plum"></button>
-            <button data-theme="sand" title="Muted Sand"></button>
-          </div>
-          <button class="chip button-chip" id="topRuleBtn" type="button">默认规则</button>
+          <button class="button small" id="topNewProjectBtn" type="button">新项目</button>
         </div>
       </header>
 
-      <section class="view active" id="workView">
-        <div class="studio-grid">
-          <section class="panel composer-panel">
-            <div class="panel-head">
-              <div>
-                <p class="section-label">New Project</p>
-                <h2>新建项目</h2>
-              </div>
-              <button class="button small" id="resetProjectBtn" type="button">清空</button>
-            </div>
-
-            <label class="field-label">项目名称<input id="projectNameInput" value="新客户脚本" /></label>
-
-            <section class="upload-zone" id="uploadZone">
-              <div><strong>上传素材 / 文件</strong><span>brief、会议纪要、参考文案、客户说明</span></div>
-              <button class="button small" id="uploadMaterialBtn" type="button">添加</button>
-            </section>
-            <div class="file-list" id="fileList"></div>
-
-            <label class="field-label material-field">客户素材<textarea id="sourceText" spellcheck="false" placeholder="粘贴客户描述、会议纪要、已有脚本或文件摘要..."></textarea></label>
-
-            <div class="generation-bar">
-              <select id="modelSelect" aria-label="模型选择"></select>
-              <button class="button soft" id="ruleButton" type="button">规则 / Prompt</button>
-              <button class="button filled" id="generateBtn" type="button">生成脚本</button>
-            </div>
-          </section>
-
-          <section class="panel preview-panel">
-            <div class="script-head">
-              <div>
-                <p class="section-label" id="scriptState">Draft</p>
-                <h2>脚本预览</h2>
-              </div>
-              <div class="compact-actions">
-                <button class="button small" id="tuneBtn" type="button">调校</button>
-                <button class="button small" id="saveScriptBtn" type="button">保存</button>
-                <button class="button filled small" id="exportBtn" type="button">导出</button>
-              </div>
-            </div>
-            <div class="script-list" id="scriptList"></div>
-            <div class="version-bar" id="versionBar"></div>
-          </section>
-        </div>
+      <section class="view active" id="projectsView">
+        <section class="panel project-home">
+          <div class="panel-head">
+            <div><p class="section-label">Projects</p><h2>项目</h2></div>
+            <div class="project-filters" id="projectFilters"></div>
+          </div>
+          <div class="project-card-grid" id="projectCardGrid"></div>
+        </section>
       </section>
 
-      <section class="view" id="projectsView">
-        <div class="projects-grid">
-          <section class="panel projects-panel">
-            <div class="panel-head">
-              <div><p class="section-label">Projects</p><h2>项目库</h2></div>
-              <button class="button filled small" id="newProjectBtn" type="button">新建</button>
+      <section class="view" id="workView">
+        <section class="panel composer-panel">
+          <div class="panel-head">
+            <div><p class="section-label">New Script</p><h2>新建脚本</h2></div>
+            <button class="button small" id="resetProjectBtn" type="button">清空</button>
+          </div>
+
+          <label class="field-label">项目名称<input id="projectNameInput" value="新客户脚本" /></label>
+
+          <section class="upload-zone compact-upload" id="uploadZone" tabindex="0">
+            <div>
+              <strong>素材 / 文件</strong>
+              <span>可拖拽到这里，也可用输入框左下角的加号添加</span>
+              <small>支持 Markdown、TXT、DOCX、PDF</small>
             </div>
-            <div class="library-toolbar"><input id="projectSearch" placeholder="搜索项目" /></div>
-            <div class="project-list" id="projectList"></div>
           </section>
-          <aside class="panel project-detail" id="projectDetail"></aside>
-        </div>
+          <input class="hidden-file" id="fileInput" type="file" multiple accept=".md,.markdown,.txt,.docx,.pdf" />
+          <div class="file-list" id="fileList"></div>
+
+          <label class="field-label prompt-field">
+            微调方向
+            <input id="promptInput" placeholder="微调方向（可选）" />
+          </label>
+
+          <label class="field-label material-field material-composer">
+            客户素材
+            <textarea id="sourceText" spellcheck="false" placeholder="粘贴客户描述、会议纪要、已有脚本或文件摘要..."></textarea>
+            <div class="composer-actions">
+              <div class="action-menu-wrap">
+                <button class="icon-button" id="addMenuBtn" type="button" aria-label="添加"></button>
+                <div class="floating-menu add-menu hidden" id="addMenu">
+                  <button data-upload-from-menu type="button">从文件添加</button>
+                  <button data-use-material-from-menu type="button">从素材库</button>
+                  <button data-open-skill-picker type="button">从 Skill</button>
+                </div>
+                <div class="floating-menu skill-pick-menu hidden" id="skillPickMenu"></div>
+              </div>
+              <div class="composer-spacer"></div>
+              <div class="action-menu-wrap right-actions">
+                <button class="icon-button model-current" id="modelMenuBtn" type="button" aria-label="选择模型"></button>
+                <div class="floating-menu model-menu hidden" id="modelMenu"></div>
+              </div>
+              <button class="icon-button send-button" id="generateBtn" type="button" aria-label="生成"></button>
+            </div>
+          </label>
+        </section>
+      </section>
+
+      <section class="view" id="scriptView">
+        <section class="panel preview-panel">
+          <div class="script-head">
+            <div>
+              <p class="section-label" id="scriptState">可编辑稿</p>
+              <h2 id="scriptHeading">脚本文档</h2>
+            </div>
+            <div class="compact-actions">
+              <button class="button small" id="backToMaterialBtn" type="button">素材</button>
+              <button class="button small" id="tuneBtn" type="button">调校</button>
+              <button class="button small" id="saveScriptBtn" type="button">保存</button>
+              <button class="button filled small" id="exportBtn" type="button">导出</button>
+            </div>
+          </div>
+          <div class="script-list" id="scriptList"></div>
+          <div class="version-bar" id="versionBar"></div>
+        </section>
+      </section>
+
+      <section class="view" id="skillsView">
+        <section class="panel skill-page" id="skillPanel"></section>
+      </section>
+
+      <section class="view" id="materialsView">
+        <section class="panel material-library-page" id="materialPanel"></section>
       </section>
 
       <section class="view" id="settingsView">

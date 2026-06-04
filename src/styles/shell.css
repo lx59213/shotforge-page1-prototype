@@ -53,6 +53,14 @@ h2,
   display: none !important;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+}
+
 .kicker,
 .section-label {
   margin: 0;
@@ -143,7 +151,7 @@ textarea {
 input,
 select {
   height: 42px;
-  padding: 0 var(--space-3);
+  padding: 0 var(--space-4);
 }
 
 textarea {
@@ -166,23 +174,32 @@ button:focus-visible {
   z-index: 1;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr);
+  grid-template-columns: var(--rail-width, 260px) minmax(0, 1fr);
+  transition: grid-template-columns var(--motion-mid) var(--ease-out);
+}
+
+.app-shell.rail-collapsed {
+  --rail-width: 56px;
 }
 
 .side-rail {
   display: flex;
   flex-direction: column;
   gap: var(--space-4);
-  padding: 22px 14px;
+  min-width: 0;
+  overflow: hidden;
+  padding: 16px 8px;
   background: color-mix(in oklch, var(--rail) 94%, var(--surface));
   border-right: 1px solid var(--line);
 }
 
 .rail-brand {
+  position: relative;
   display: flex;
   align-items: center;
-  gap: var(--space-3);
-  padding: 0 var(--space-2) var(--space-4);
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 0 var(--space-2) var(--space-3);
   border-bottom: 1px solid var(--line);
 }
 
@@ -201,11 +218,40 @@ button:focus-visible {
 .rail-brand strong,
 .rail-brand small {
   display: block;
+  white-space: nowrap;
 }
 
 .rail-brand small {
   color: var(--muted);
   font-size: 12px;
+}
+
+.rail-toggle {
+  width: 28px;
+  height: 28px;
+  margin-left: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-sm);
+  background: color-mix(in oklch, var(--surface) 88%, transparent);
+  color: var(--muted);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), border var(--motion-fast) var(--ease-out);
+}
+
+.rail-toggle::before {
+  content: "";
+  width: 15px;
+  height: 15px;
+  display: block;
+  margin: auto;
+  background: currentColor;
+  clip-path: polygon(72% 15%, 82% 25%, 47% 50%, 82% 75%, 72% 85%, 28% 50%);
+}
+
+.rail-toggle:hover {
+  border-color: color-mix(in oklch, var(--primary) 28%, var(--line));
+  background: var(--surface);
+  transform: translateY(-1px);
 }
 
 .rail-nav {
@@ -222,6 +268,7 @@ button:focus-visible {
   color: var(--ink);
   display: flex;
   align-items: center;
+  gap: var(--space-3);
   padding: 0 var(--space-3);
   cursor: pointer;
   font-weight: 850;
@@ -260,11 +307,56 @@ button:focus-visible {
   min-height: 40px;
   display: flex;
   align-items: center;
+  gap: var(--space-3);
   border-radius: var(--radius-md);
   background: transparent;
   padding: 0 var(--space-3);
   font-weight: 850;
   transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-grid;
+  place-items: center;
+}
+
+.nav-icon::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background: currentColor;
+  -webkit-mask: var(--icon) center / contain no-repeat;
+  mask: var(--icon) center / contain no-repeat;
+}
+
+.icon-new {
+  --icon: url("data:image/svg+xml,%3Csvg width='24' height='24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7 3.5h7l3 3v14H7z'/%3E%3Cpath d='M14 3.5v4h4'/%3E%3Cpath d='M12 11v6M9 14h6'/%3E%3C/svg%3E");
+}
+
+.icon-folder {
+  --icon: url("data:image/svg+xml,%3Csvg width='24' height='24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3.5 6.5h6l2 2h10v10.8a1.2 1.2 0 0 1-1.2 1.2H4.7a1.2 1.2 0 0 1-1.2-1.2z'/%3E%3Cpath d='M3.5 9h18'/%3E%3C/svg%3E");
+}
+
+.icon-material {
+  --icon: url("data:image/svg+xml,%3Csvg width='24' height='24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M5 4.5h14v15H5z'/%3E%3Cpath d='M8 8h8M8 11.5h8M8 15h5'/%3E%3Cpath d='M17 4.5v15' opacity='.45'/%3E%3C/svg%3E");
+}
+
+.icon-shield {
+  --icon: url("data:image/svg+xml,%3Csvg width='24' height='24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 3.5 19 6v5.4c0 4.2-2.8 7.2-7 9.1-4.2-1.9-7-4.9-7-9.1V6z'/%3E%3Cpath d='m9.2 12 1.9 1.9 4-4.2'/%3E%3C/svg%3E");
+}
+
+.icon-gear {
+  --icon: url("data:image/svg+xml,%3Csvg width='24' height='24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 8.2a3.8 3.8 0 1 0 0 7.6 3.8 3.8 0 0 0 0-7.6Z'/%3E%3Cpath d='M19 13.2v-2.4l-2.1-.6a7 7 0 0 0-.8-1.8l1.1-1.9-1.7-1.7-1.9 1.1a7 7 0 0 0-1.8-.8L11.2 3H8.8l-.6 2.1a7 7 0 0 0-1.8.8L4.5 4.8 2.8 6.5l1.1 1.9a7 7 0 0 0-.8 1.8l-2.1.6v2.4l2.1.6a7 7 0 0 0 .8 1.8l-1.1 1.9 1.7 1.7 1.9-1.1a7 7 0 0 0 1.8.8l.6 2.1h2.4l.6-2.1a7 7 0 0 0 1.8-.8l1.9 1.1 1.7-1.7-1.1-1.9a7 7 0 0 0 .8-1.8z'/%3E%3C/svg%3E");
+}
+
+.nav-text {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .system-link:hover {
@@ -280,10 +372,11 @@ button:focus-visible {
 
 .account-card {
   display: grid;
-  grid-template-columns: 34px minmax(0, 1fr);
+  grid-template-columns: 30px minmax(0, 1fr);
   align-items: center;
-  gap: var(--space-3);
-  padding: var(--space-3);
+  gap: var(--space-2);
+  width: min(100%, 228px);
+  padding: 10px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: color-mix(in oklch, var(--surface) 62%, transparent);
@@ -302,14 +395,15 @@ button:focus-visible {
 }
 
 .account-avatar {
-  width: 34px;
-  height: 34px;
+  width: 30px;
+  height: 30px;
   display: grid;
   place-items: center;
   border-radius: 50%;
   color: var(--surface);
   background: linear-gradient(135deg, var(--primary), var(--primary-2));
   font-weight: 900;
+  font-size: 13px;
 }
 
 .account-copy {
@@ -334,6 +428,38 @@ button:focus-visible {
   line-height: 20px;
   text-overflow: ellipsis;
   white-space: nowrap;
+}
+
+.app-shell.rail-collapsed .rail-brand {
+  justify-content: center;
+  padding-inline: 0;
+}
+
+.app-shell.rail-collapsed .rail-brand div,
+.app-shell.rail-collapsed .nav-text,
+.app-shell.rail-collapsed .account-copy {
+  display: none;
+}
+
+.app-shell.rail-collapsed .logo-mark {
+  display: none;
+}
+
+.app-shell.rail-collapsed .rail-toggle {
+  margin: 0;
+  transform: rotate(180deg);
+}
+
+.app-shell.rail-collapsed .rail-nav button,
+.app-shell.rail-collapsed .system-link {
+  justify-content: center;
+  padding: 0;
+}
+
+.app-shell.rail-collapsed .account-card {
+  grid-template-columns: 1fr;
+  place-items: center;
+  padding: var(--space-2);
 }
 
 .workspace {
@@ -483,6 +609,15 @@ button:focus-visible {
   background:
     radial-gradient(circle at 18% 10%, color-mix(in oklch, var(--glow) 44%, transparent), transparent 38%),
     linear-gradient(180deg, color-mix(in oklch, var(--primary) 94%, var(--surface)), var(--primary-2));
+}
+
+.button:disabled,
+.button[aria-disabled="true"] {
+  cursor: not-allowed;
+  color: var(--disabled-text);
+  background: var(--disabled-bg);
+  box-shadow: none;
+  transform: none;
 }
 
 .button.soft {

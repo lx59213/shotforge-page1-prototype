@@ -11,38 +11,119 @@ export const accounts = [
 ];
 
 export const models = [
-  { id: "gpt", label: "GPT", note: "结构稳定" },
-  { id: "gemini", label: "Gemini", note: "表达自然" },
-  { id: "glm", label: "智谱 GLM", note: "中文友好" },
-  { id: "doubao", label: "豆包", note: "响应快" },
-  { id: "claude", label: "Claude", note: "长材料稳" }
+  {
+    id: "gpt",
+    label: "GPT-5.2",
+    provider: "OpenAI",
+    version: "gpt-5.2",
+    note: "结构稳定",
+    logo: "./assets/openai.svg",
+    mark: "AI"
+  },
+  {
+    id: "gemini",
+    label: "Gemini 3 Pro",
+    provider: "Google",
+    version: "gemini-3-pro-preview",
+    note: "表达自然",
+    logo: "./assets/gemini.svg",
+    mark: "G"
+  },
+  {
+    id: "claude",
+    label: "Sonnet 4.6",
+    provider: "Anthropic",
+    version: "claude-sonnet-4-6",
+    note: "长材料稳",
+    logo: "./assets/anthropic.svg",
+    mark: "C"
+  },
+  {
+    id: "glm",
+    label: "GLM-4.7",
+    provider: "智谱",
+    version: "glm-4.7",
+    note: "中文友好",
+    logo: "./assets/zhipu.svg",
+    mark: "智"
+  },
+  {
+    id: "doubao",
+    label: "Seed 1.6",
+    provider: "豆包",
+    version: "doubao-seed-1-6",
+    note: "响应快",
+    logo: "./assets/doubao.svg",
+    mark: "豆"
+  }
 ];
 
 export const skillPresets = [
   {
     id: "default",
-    name: "默认广告脚本规则",
-    prompt: "先提炼客户素材里的目标、人物、冲突、卖点和结尾动作；输出四到六段可直接编辑的广告脚本，不写空泛解释。"
+    name: "默认拆解规则",
+    description: "客户素材到可审脚本文档",
+    instructions: "先提炼客户素材里的目标、人物、冲突、卖点和结尾动作；输出四到六段可直接编辑的广告脚本，不写空泛解释。"
   },
   {
     id: "viral",
-    name: "病毒短片节奏",
-    prompt: "优先制造反差、误会和记忆点；开场三秒给出明确冲突，中段让卖点自然出现，结尾保留可传播的轻巧句子。"
+    name: "传播短片节奏",
+    description: "更偏反差和传播点",
+    instructions: "优先制造反差、误会和记忆点；开场三秒给出明确冲突，中段让卖点自然出现，结尾保留可传播的轻巧句子。"
   },
   {
     id: "brand",
     name: "品牌质感版本",
-    prompt: "压低夸张情绪，突出服务稳定、动作可信和人物真实反应；语言简洁，避免喊口号。"
+    description: "更克制、更像客户可确认稿",
+    instructions: "压低夸张情绪，突出服务稳定、动作可信和人物真实反应；语言简洁，避免喊口号。"
   }
 ];
 
 export const generationSteps = ["读取素材", "提炼卖点", "套用规则", "生成脚本"];
+
+export const materialGroups = [
+  { id: "group-public", name: "公共案例", count: 12 },
+  { id: "group-client", name: "客户资料", count: 3 },
+  { id: "group-private", name: "个人参考", count: 5 }
+];
+
+export const materialItems = [
+  {
+    id: "mat-001",
+    title: "轻喜剧广告 brief",
+    group: "客户资料",
+    type: "Markdown",
+    updated: "刚刚",
+    tags: ["brief", "轻喜剧"],
+    visible: "编剧可见"
+  },
+  {
+    id: "mat-002",
+    title: "服务反转案例库",
+    group: "公共案例",
+    type: "PDF",
+    updated: "昨天",
+    tags: ["案例", "反转"],
+    visible: "全员"
+  },
+  {
+    id: "mat-003",
+    title: "客户确认口径",
+    group: "个人参考",
+    type: "TXT",
+    updated: "2 天前",
+    tags: ["口径", "确认稿"],
+    visible: "仅本人"
+  }
+];
 
 export const seedProjects = [
   {
     id: "proj-001",
     name: "客户脚本样板",
     updated: "刚刚",
+    favorite: true,
+    group: "样板",
     files: ["客户 brief.txt", "品牌语气.pdf"],
     source: "客户想做一条 60 秒广告：一个人遇到临时状况，服务或设备用很轻的方式把事情稳住。整体要有轻松感，但不要变成硬广。",
     script: []
