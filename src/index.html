@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ScriptForge 脚本工作台</title>
+  <title>ScriptForge 脚本生产平台</title>
   <link rel="stylesheet" href="./styles/tokens.css" />
   <link rel="stylesheet" href="./styles/shell.css" />
   <link rel="stylesheet" href="./styles/app.css" />
@@ -11,65 +11,46 @@
 <body data-theme="paper">
   <section class="login-screen" id="loginScreen">
     <div class="login-copy">
-      <p class="kicker">ScriptForge Prototype</p>
-      <h1>把客户素材，整理成可审、可改、可导出的脚本文档。</h1>
-      <p>当前只演示页面一：素材输入到文字脚本。账号、项目资料、保存和导出都是模拟数据，但每个入口都有完整反馈。</p>
-      <div class="paper-strip" aria-label="脚本结构预览">
-        <span><b>01</b><em>开场钩子</em></span>
-        <span><b>02</b><em>冲突建立</em></span>
-        <span><b>03</b><em>卖点转折</em></span>
-        <span><b>04</b><em>结尾行动</em></span>
-      </div>
+      <p class="kicker">ScriptForge</p>
+      <h1>广告脚本生产平台</h1>
+      <p>素材、规则、版本和导出，放进一条清爽的创作工作流。</p>
     </div>
 
     <form class="login-card" id="loginForm">
       <p class="section-label">Account</p>
-      <h2>选择演示账号</h2>
-      <label>账号<input id="loginAccount" value="admin.demo" /></label>
+      <h2>登录</h2>
+      <label>账号<select id="loginAccount"></select></label>
       <label>密码<input type="password" value="prototype" /></label>
-      <div class="account-grid">
-        <button type="button" data-login-account="admin">管理员</button>
-        <button type="button" data-login-account="editor">正常使用</button>
-        <button type="button" data-login-account="reader">只读查看</button>
-      </div>
-      <button class="button filled" type="submit">进入工作台</button>
+      <button class="button filled wide" type="submit">进入</button>
     </form>
   </section>
 
   <div class="app-shell hidden" id="appShell">
     <aside class="side-rail">
-      <section class="project-card">
-        <p class="kicker">Current Project</p>
-        <label class="select-label" for="projectSelect">当前项目</label>
-        <select id="projectSelect"></select>
+      <section class="rail-brand">
+        <span class="logo-mark">SF</span>
+        <div><strong>ScriptForge</strong><small>脚本生产平台</small></div>
       </section>
 
-      <nav class="rail-nav" aria-label="页面一流程">
-        <button class="active" data-nav="work">素材转脚本</button>
-        <button data-nav="library">项目资料</button>
+      <nav class="rail-nav" aria-label="主导航">
+        <button class="active" data-nav="work">新建项目</button>
+        <button data-nav="projects">项目库</button>
         <button data-nav="settings">设置</button>
+        <button data-nav="admin" data-admin-only>后台</button>
       </nav>
 
-      <section class="project-tree">
-        <div class="rail-title">项目资料</div>
-        <div id="projectTree"></div>
-      </section>
-
       <section class="account-card">
-        <p>当前账号</p>
+        <p>当前账户</p>
         <strong id="railAccountName">管理员</strong>
-        <span id="railAccountPermission">可正常使用</span>
+        <span id="railAccountType">管理员</span>
       </section>
     </aside>
 
     <main class="workspace">
       <header class="topbar">
         <div class="brand-lockup">
-          <span class="logo-mark">SF</span>
-          <div>
-            <strong>ScriptForge 脚本工作台</strong>
-            <span id="stageText">页面一 / 客户素材转脚本</span>
-          </div>
+          <strong id="stageTitle">新建项目</strong>
+          <span id="stageText">上传素材，配置规则，生成第一版脚本</span>
         </div>
         <div class="top-actions">
           <div class="theme-picker" aria-label="主题色">
@@ -78,75 +59,77 @@
             <button data-theme="ink" title="Ink Plum"></button>
             <button data-theme="sand" title="Muted Sand"></button>
           </div>
-          <span class="chip" id="projectChip">客户短片 A</span>
+          <button class="chip button-chip" id="topRuleBtn" type="button">默认规则</button>
           <span class="chip strong" id="accountChip">管理员</span>
         </div>
       </header>
 
       <section class="view active" id="workView">
-        <div class="work-grid">
-          <section class="panel source-panel">
+        <div class="studio-grid">
+          <section class="panel composer-panel">
             <div class="panel-head">
               <div>
-                <p class="section-label">Client Material</p>
-                <h2>客户素材输入</h2>
+                <p class="section-label">New Project</p>
+                <h2>新建项目</h2>
               </div>
-              <div class="compact-actions">
-                <button class="button small" id="importMaterialBtn" type="button">从项目资料导入</button>
-                <button class="button small" id="uploadMaterialBtn" type="button">上传素材</button>
-              </div>
+              <button class="button small" id="resetProjectBtn" type="button">清空</button>
             </div>
-            <textarea id="sourceText" spellcheck="false"></textarea>
-            <div class="example-row" id="exampleRow"></div>
+
+            <label class="field-label">项目名称<input id="projectNameInput" value="新客户脚本" /></label>
+
+            <section class="upload-zone" id="uploadZone">
+              <div><strong>上传素材 / 文件</strong><span>brief、会议纪要、参考文案、客户说明</span></div>
+              <button class="button small" id="uploadMaterialBtn" type="button">添加</button>
+            </section>
+            <div class="file-list" id="fileList"></div>
+
+            <label class="field-label material-field">客户素材<textarea id="sourceText" spellcheck="false" placeholder="粘贴客户描述、会议纪要、已有脚本或文件摘要..."></textarea></label>
+
+            <div class="generation-bar">
+              <select id="modelSelect" aria-label="模型选择"></select>
+              <button class="button soft" id="ruleButton" type="button">规则 / Prompt</button>
+              <button class="button filled" id="generateBtn" type="button">生成脚本</button>
+            </div>
           </section>
 
-          <aside class="panel control-panel">
-            <p class="section-label">Generation</p>
-            <label class="field-label" for="modelSelect">模型</label>
-            <select id="modelSelect"></select>
-            <label class="field-label" for="toneSelect">脚本方向</label>
-            <select id="toneSelect">
-              <option value="轻喜剧">轻喜剧</option>
-              <option value="写实">写实</option>
-              <option value="高级感">高级感</option>
-            </select>
-            <button class="button filled wide" id="generateBtn" type="button">生成脚本文档</button>
-            <button class="button wide" id="clearSourceBtn" type="button">清空素材</button>
-          </aside>
-
-          <section class="script-area" id="scriptArea"></section>
+          <section class="panel preview-panel">
+            <div class="script-head">
+              <div>
+                <p class="section-label" id="scriptState">Draft</p>
+                <h2>脚本预览</h2>
+              </div>
+              <div class="compact-actions">
+                <button class="button small" id="tuneBtn" type="button">调校</button>
+                <button class="button small" id="saveScriptBtn" type="button">保存</button>
+                <button class="button filled small" id="exportBtn" type="button">导出</button>
+              </div>
+            </div>
+            <div class="script-list" id="scriptList"></div>
+            <div class="version-bar" id="versionBar"></div>
+          </section>
         </div>
       </section>
 
-      <section class="view" id="libraryView">
-        <div class="library-grid">
-          <section class="panel library-panel">
+      <section class="view" id="projectsView">
+        <div class="projects-grid">
+          <section class="panel projects-panel">
             <div class="panel-head">
-              <div>
-                <p class="section-label">Project Library</p>
-                <h2>项目资料</h2>
-              </div>
-              <div class="compact-actions">
-                <button class="button small" id="newProjectBtn" type="button">新建项目</button>
-                <button class="button filled small" id="libraryUploadBtn" type="button">上传资料</button>
-              </div>
+              <div><p class="section-label">Projects</p><h2>项目库</h2></div>
+              <button class="button filled small" id="newProjectBtn" type="button">新建</button>
             </div>
-            <div class="library-toolbar">
-              <input id="librarySearch" placeholder="搜索项目、素材、脚本" />
-              <div class="filter-row" id="libraryFilters"></div>
-            </div>
-            <div class="library-list" id="libraryList"></div>
+            <div class="library-toolbar"><input id="projectSearch" placeholder="搜索项目" /></div>
+            <div class="project-list" id="projectList"></div>
           </section>
-
-          <aside class="panel library-detail" id="libraryDetail"></aside>
+          <aside class="panel project-detail" id="projectDetail"></aside>
         </div>
       </section>
 
       <section class="view" id="settingsView">
-        <div class="settings-grid">
-          <section class="panel profile-panel" id="profilePanel"></section>
-          <section class="panel admin-panel" id="adminPanel"></section>
-        </div>
+        <section class="panel profile-panel" id="profilePanel"></section>
+      </section>
+
+      <section class="view" id="adminView">
+        <section class="panel admin-panel" id="adminPanel"></section>
       </section>
     </main>
   </div>

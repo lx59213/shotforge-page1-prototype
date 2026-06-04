@@ -1,150 +1,77 @@
+export const accountTypes = [
+  { id: "admin", name: "管理员", canEdit: true, canAdmin: true },
+  { id: "writer", name: "编剧", canEdit: true, canAdmin: false },
+  { id: "client", name: "客户", canEdit: false, canAdmin: false }
+];
+
 export const accounts = [
-  {
-    id: "admin",
-    name: "管理员",
-    login: "admin.demo",
-    permission: "admin",
-    description: "可生成、编辑、保存、导出，并管理其他账号。"
-  },
-  {
-    id: "editor",
-    name: "正常使用账号",
-    login: "editor.demo",
-    permission: "write",
-    description: "可生成、编辑、保存、导出项目脚本。"
-  },
-  {
-    id: "reader",
-    name: "只读账号",
-    login: "reader.demo",
-    permission: "read",
-    description: "只可查看项目资料和脚本文档，不能改动内容。"
-  }
+  { id: "admin", login: "admin.demo", name: "管理员账号", type: "admin" },
+  { id: "writer", login: "writer.demo", name: "编剧账号", type: "writer" },
+  { id: "client", login: "client.demo", name: "客户账号", type: "client" }
 ];
 
 export const models = [
   { id: "gpt", label: "GPT", note: "结构稳定" },
   { id: "gemini", label: "Gemini", note: "表达自然" },
   { id: "glm", label: "智谱 GLM", note: "中文友好" },
-  { id: "doubao", label: "豆包", note: "响应较快" },
+  { id: "doubao", label: "豆包", note: "响应快" },
   { id: "claude", label: "Claude", note: "长材料稳" }
 ];
 
-export const exampleMaterials = [
+export const skillPresets = [
   {
-    label: "办公室陪伴",
-    text: "客户想做一条 60 秒轻喜剧广告：深夜办公室里，一个加班的人又累又嘴硬，智能设备用几次很轻的提醒把他从烦躁里拉回来。最后他发现设备不是在打扰，而是在帮他把工作节奏稳住。"
+    id: "default",
+    name: "默认广告脚本规则",
+    prompt: "先提炼客户素材里的目标、人物、冲突、卖点和结尾动作；输出四到六段可直接编辑的广告脚本，不写空泛解释。"
   },
   {
-    label: "酒店急送",
-    text: "客户描述：台风天，酒店住客临时需要生活用品，前台忙不过来。希望脚本既有紧张感，也要表现服务稳定、响应快、送达靠谱。"
+    id: "viral",
+    name: "病毒短片节奏",
+    prompt: "优先制造反差、误会和记忆点；开场三秒给出明确冲突，中段让卖点自然出现，结尾保留可传播的轻巧句子。"
   },
   {
-    label: "门店促销",
-    text: "客户只给了一句话：一张优惠券把冷清小店重新带热，老板从怀疑到惊喜，结尾要有年轻人愿意分享的幽默感。"
+    id: "brand",
+    name: "品牌质感版本",
+    prompt: "压低夸张情绪，突出服务稳定、动作可信和人物真实反应；语言简洁，避免喊口号。"
   }
 ];
 
-export const generationSteps = [
-  "读取客户素材",
-  "提炼核心卖点",
-  "整理脚本结构",
-  "补齐口播与动作",
-  "生成可编辑脚本文档"
-];
+export const generationSteps = ["读取素材", "提炼卖点", "套用规则", "生成脚本"];
 
-export const projects = [
+export const seedProjects = [
   {
-    id: "client-short-a",
-    name: "客户短片 A",
-    owner: "全员",
-    updated: "今天 18:20",
-    materials: [
-      {
-        id: "brief-office",
-        type: "客户素材",
-        title: "办公室陪伴原始描述",
-        scope: "全员",
-        text: exampleMaterials[0].text
-      },
-      {
-        id: "tone-guide",
-        type: "参考文件",
-        title: "品牌语气说明",
-        scope: "全员",
-        text: "语气克制、轻松、有一点点人情味。避免夸张喊口号，重点是把产品能力放进自然的工作场景。"
-      },
-      {
-        id: "history-script",
-        type: "历史脚本",
-        title: "上一版脚本节奏",
-        scope: "管理员 / 正常使用",
-        text: "开场先建立工作压力，再出现轻微误会，最后用一个反差动作把卖点落住。"
-      }
-    ]
-  },
-  {
-    id: "hotel-service-b",
-    name: "酒店服务 B",
-    owner: "正常使用",
-    updated: "昨天 21:05",
-    materials: [
-      {
-        id: "brief-hotel",
-        type: "客户素材",
-        title: "台风天急送需求",
-        scope: "全员",
-        text: exampleMaterials[1].text
-      },
-      {
-        id: "service-notes",
-        type: "参考文件",
-        title: "服务稳定性卖点",
-        scope: "管理员 / 正常使用",
-        text: "重点表现响应及时、路径清晰、交付动作稳，不要写成硬广说明书。"
-      }
-    ]
-  },
-  {
-    id: "store-campaign-c",
-    name: "门店促销 C",
-    owner: "管理员",
-    updated: "3 天前",
-    materials: [
-      {
-        id: "brief-store",
-        type: "客户素材",
-        title: "小店拉新一句话",
-        scope: "全员",
-        text: exampleMaterials[2].text
-      }
-    ]
+    id: "proj-001",
+    name: "客户脚本样板",
+    updated: "刚刚",
+    files: ["客户 brief.txt", "品牌语气.pdf"],
+    source: "客户想做一条 60 秒广告：一个人遇到临时状况，服务或设备用很轻的方式把事情稳住。整体要有轻松感，但不要变成硬广。",
+    script: []
   }
 ];
 
-export const defaultScript = [
+export const emptyScript = [
   {
     id: "part-1",
-    label: "开场钩子",
-    title: "深夜办公室的硬撑",
-    content: "夜里，办公室只剩一个人。他盯着屏幕说“马上就好”，手边的咖啡已经凉了，桌面消息还在不断弹出。"
+    label: "开场",
+    title: "把人物放进具体麻烦",
+    content: "主角被一个临时状况打断，动作开始变乱，但还在嘴硬。"
   },
   {
     id: "part-2",
-    label: "冲突建立",
-    title: "提醒被误会成打扰",
-    content: "智能设备轻轻亮起，提醒他喝水、休息、检查清单。他皱眉按掉提示，嘴上说“不用管我”，却又马上找不到刚才的文件。"
+    label: "推进",
+    title: "旧办法失效",
+    content: "他尝试按经验处理，结果越处理越忙，问题被观众看得更清楚。"
   },
   {
     id: "part-3",
-    label: "卖点转折",
-    title: "真正被稳住的是节奏",
-    content: "设备把待办按优先级排好，顺手调暗灯光、保留关键提醒。他终于发现，自己不是被打断，而是从混乱里被拉回了节奏。"
+    label: "转折",
+    title: "产品能力出现",
+    content: "产品或服务用一个具体动作把混乱梳理好，卖点从人物反应里被看见。"
   },
   {
     id: "part-4",
-    label: "结尾行动",
-    title: "一句轻松的收束",
-    content: "他喝下一口水，笑着把最后一项划掉。设备弹出一句：“今天也别把自己当机器。”画面停在安静下来的桌面。"
+    label: "收束",
+    title: "留下记忆点",
+    content: "主角给出一个轻松反应，用一句短促的话收住品牌记忆。"
   }
 ];

@@ -1,35 +1,33 @@
-# Prototype Architecture
+# App Architecture
 
-`prototype/` is the deployable Page 1 HTML prototype for ScriptForge.
+`prototype/` is the deployable ScriptForge static app.
 
 ## Tree
 
 - `server.mjs`: dependency-free Node preview server with static hosting and mock script API routes.
-- `index.html`: public entry that redirects to the static prototype under `src/`.
+- `index.html`: public entry that redirects to the static app under `src/`.
 - `.gitignore`: keeps generated screenshots and macOS metadata out of the public repo.
 - `api/generate.js`: Vercel mock endpoint for customer-material-to-script generation.
 - `api/save.js`: Vercel mock endpoint for saving a script version.
 - `vercel.json`: rewrites static assets and API routes for online preview.
 - `package.json`: start scripts for local or server deployment.
-- `src/index.html`: app shell for login, script workspace, project library, and settings.
+- `src/index.html`: app shell for login, new project, project library, settings, and admin backend.
 - `src/styles/tokens.css`: color themes, typography, spacing, motion, and contrast tokens.
 - `src/styles/shell.css`: reset, login, navigation rail, topbar, buttons, modal, and responsive shell.
-- `src/styles/app.css`: script editor, project library, settings, progress states, and microinteractions.
-- `src/scripts/data.js`: mock accounts, models, projects, materials, and script sections.
-- `src/scripts/app.js`: single-page state, permissions, generation, editing, reorder, save, export, and library flows.
+- `src/styles/app.css`: composer, script preview, project library, admin backend, and microinteractions.
+- `src/scripts/data.js`: accounts, account types, models, skill presets, seed projects, and script sections.
+- `src/scripts/app.js`: single-page state, permissions, project creation, skill configuration, generation, editing, save, export, and backend flows.
 
 ## Boundaries
 
-This prototype only demonstrates Page 1: customer materials become editable text scripts. Image generation, later production stages, customer-facing review pages, and detailed production planning are outside this prototype.
+The entry journey is login -> new project -> upload or paste material -> choose model and skill -> generate script -> edit, save, export. Later image, production, and editing stages stay outside this app shell.
 
 ## Decisions
 
-The script document is the artifact. The library exists only to feed customer materials into that artifact. Account permissions are simulated as admin, normal use, and read-only, with admin-only password reset and permission controls in settings.
+The new project composer is the first work surface. Account type is configured in the backend as admin, writer, or client; admin receives a backend navigation entry and can change other accounts.
 
 ## Change Log
 
-- 2026-06-03: Created deployable HTML prototype after Paper MCP quota blocked further canvas work.
-- 2026-06-04: Removed overbuilt visual layers; tightened MVP flow and added editable script interactions.
-- 2026-06-04: Added Vercel API shims so deployed previews keep generation and save flows alive.
-- 2026-06-04: Added a public root entry for static preview.
-- 2026-06-04: Re-scoped the prototype to customer material -> text script only, with account permissions and project library selection.
+- 2026-06-03: Created deployable HTML app after Paper MCP quota blocked further canvas work.
+- 2026-06-04: Re-scoped the app to customer material -> editable text script.
+- 2026-06-04: Rebuilt the entry journey around new project creation, compact model/skill controls, and admin-configured account types.

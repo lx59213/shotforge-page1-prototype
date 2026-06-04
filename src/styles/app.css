@@ -1,20 +1,23 @@
-.work-grid {
+.studio-grid {
   display: grid;
-  grid-template-columns: minmax(460px, 1fr) 310px;
-  grid-template-rows: auto minmax(420px, 1fr);
+  grid-template-columns: minmax(420px, 520px) minmax(620px, 1fr);
   gap: var(--space-4);
   min-height: calc(100vh - 112px);
 }
 
-.source-panel,
-.control-panel,
-.script-paper,
-.tune-panel,
-.library-panel,
-.library-detail,
+.composer-panel,
+.preview-panel,
+.projects-panel,
+.project-detail,
 .profile-panel,
 .admin-panel {
   padding: var(--space-5);
+}
+
+.composer-panel {
+  display: grid;
+  align-content: start;
+  gap: var(--space-4);
 }
 
 .panel-head,
@@ -25,116 +28,131 @@
   gap: var(--space-4);
 }
 
-.source-panel textarea {
-  width: 100%;
-  min-height: 190px;
-  margin-top: var(--space-4);
+.upload-zone {
+  min-height: 104px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  border: 1px dashed color-mix(in oklch, var(--primary) 28%, var(--line));
+  border-radius: var(--radius-lg);
   background:
-    linear-gradient(180deg, color-mix(in oklch, var(--surface) 96%, transparent), var(--surface-2));
+    linear-gradient(180deg, color-mix(in oklch, var(--primary-soft) 42%, transparent), transparent),
+    var(--surface);
+  padding: var(--space-4);
+}
+
+.upload-zone strong,
+.upload-zone span {
+  display: block;
+}
+
+.upload-zone span {
+  margin-top: var(--space-1);
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 20px;
+}
+
+.file-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.file-empty,
+.file-chip {
+  min-height: 32px;
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--radius-md);
+  padding: 0 var(--space-3);
+  font-size: 12px;
+}
+
+.file-empty {
+  border: 1px solid var(--line);
+  color: var(--muted);
+}
+
+.file-chip {
+  gap: var(--space-2);
+  background: var(--primary-soft);
+  color: var(--primary-text);
+  font-weight: 850;
+}
+
+.file-chip button {
+  width: 20px;
+  height: 20px;
+  border: 0;
+  border-radius: 50%;
+  background: color-mix(in oklch, var(--primary) 12%, transparent);
+  color: var(--primary-text);
+  cursor: pointer;
+}
+
+.material-field textarea {
+  width: 100%;
+  min-height: 230px;
+  margin-top: var(--space-2);
+  background:
+    repeating-linear-gradient(180deg, transparent 0 31px, color-mix(in oklch, var(--line) 36%, transparent) 31px 32px),
+    var(--surface);
   font-size: 15px;
 }
 
-.example-row {
-  margin-top: var(--space-4);
-}
-
-.example-row button,
-.filter-row button {
-  min-height: 36px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  color: var(--ink);
-  padding: 0 var(--space-3);
-  cursor: pointer;
-  font-weight: 850;
-  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
-}
-
-.example-row button:hover,
-.filter-row button:hover,
-.filter-row button.active {
-  transform: translateY(-1px);
-  background: var(--primary-soft);
-  color: var(--primary-text);
-  box-shadow: var(--shadow-hover);
-}
-
-.control-panel {
+.generation-bar {
   display: grid;
-  align-content: start;
-  gap: var(--space-3);
+  grid-template-columns: minmax(150px, 1fr) auto auto;
+  gap: var(--space-2);
+  align-items: center;
+  padding-top: var(--space-1);
 }
 
-.control-panel .button.filled {
-  margin-top: var(--space-2);
-}
-
-.script-area {
-  grid-column: 1 / -1;
+.preview-panel {
   display: grid;
-  grid-template-columns: minmax(560px, 1fr) 320px;
-  gap: var(--space-4);
-  min-width: 0;
-}
-
-.script-paper {
+  grid-template-rows: auto minmax(0, 1fr) auto;
   min-width: 0;
   background:
     linear-gradient(180deg, color-mix(in oklch, var(--surface) 96%, transparent), var(--surface)),
-    repeating-linear-gradient(180deg, transparent 0 31px, color-mix(in oklch, var(--line) 55%, transparent) 31px 32px);
-}
-
-.script-paper.generated {
-  box-shadow: var(--shadow-paper);
+    repeating-linear-gradient(180deg, transparent 0 31px, color-mix(in oklch, var(--line) 42%, transparent) 31px 32px);
 }
 
 .script-list {
   display: grid;
+  align-content: start;
   gap: var(--space-3);
+  min-height: 420px;
   margin-top: var(--space-4);
 }
 
-.empty-state {
-  min-height: 320px;
+.blank-paper {
+  min-height: 430px;
   display: grid;
   place-items: center;
   align-content: center;
   gap: var(--space-2);
-  text-align: center;
-  color: var(--muted);
   border: 1px dashed var(--line);
   border-radius: var(--radius-lg);
-  background: color-mix(in oklch, var(--surface-2) 72%, transparent);
+  color: var(--muted);
+  text-align: center;
+  background: color-mix(in oklch, var(--surface-2) 62%, transparent);
 }
 
-.empty-state strong {
+.blank-paper strong {
   color: var(--ink);
-  font-size: 21px;
+  font-size: 22px;
   line-height: 28px;
 }
 
-.empty-state p {
-  max-width: 520px;
-  margin: 0;
-  line-height: 24px;
-}
-
-.empty-icon {
-  width: 48px;
-  height: 54px;
-  display: block;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-sm);
-  background:
-    linear-gradient(90deg, transparent 0 14px, color-mix(in oklch, var(--line) 70%, transparent) 14px 15px, transparent 15px),
-    linear-gradient(180deg, var(--surface), var(--surface-2));
-  box-shadow: 7px 7px 0 color-mix(in oklch, var(--primary-soft) 88%, transparent);
+.blank-paper span {
+  font-size: 14px;
 }
 
 .script-part {
   display: grid;
-  grid-template-columns: 28px 44px minmax(0, 1fr) auto;
+  grid-template-columns: 28px 42px minmax(0, 1fr) auto;
   gap: var(--space-3);
   align-items: stretch;
   padding: var(--space-3);
@@ -216,7 +234,7 @@
 }
 
 .part-content {
-  min-height: 92px;
+  min-height: 88px;
   padding-top: var(--space-2);
   color: color-mix(in oklch, var(--ink) 78%, var(--paper));
   font-size: 15px;
@@ -238,11 +256,11 @@
   align-content: flex-start;
   justify-content: flex-end;
   gap: var(--space-2);
-  max-width: 210px;
+  max-width: 190px;
 }
 
 .mini-action {
-  min-width: 56px;
+  min-width: 54px;
   min-height: 30px;
   border: 1px solid var(--line);
   border-radius: var(--radius-sm);
@@ -265,7 +283,7 @@
 }
 
 .version-bar {
-  min-height: 54px;
+  min-height: 52px;
   margin-top: var(--space-4);
   display: flex;
   flex-wrap: wrap;
@@ -293,68 +311,18 @@
 
 .version-bar span {
   color: var(--muted);
-  font-size: 12px;
-}
-
-.tune-panel {
-  display: grid;
-  align-content: start;
-  gap: var(--space-3);
-}
-
-.tune-card,
-.profile-card,
-.export-box,
-.empty-small {
-  display: grid;
-  gap: var(--space-2);
-  padding: var(--space-4);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface-2);
-}
-
-.tune-card span,
-.profile-card span,
-.export-box span {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 16px;
-}
-
-.tune-card strong,
-.profile-card strong,
-.export-box b {
-  font-size: 18px;
-  line-height: 23px;
-}
-
-.tune-card em,
-.profile-card p {
-  margin: 0;
-  color: var(--muted);
-  font-style: normal;
-  font-size: 13px;
-  line-height: 21px;
-}
-
-.progress-panel {
-  grid-column: 1 / -1;
-  padding: var(--space-6);
 }
 
 .progress-list {
   display: grid;
   gap: var(--space-2);
-  margin-top: var(--space-5);
 }
 
 .progress-list span {
-  min-height: 40px;
+  min-height: 42px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: var(--space-4);
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: var(--surface);
@@ -368,100 +336,77 @@
   font-weight: 850;
 }
 
-.library-grid,
-.settings-grid {
+.projects-grid {
   display: grid;
-  grid-template-columns: minmax(620px, 1fr) 360px;
+  grid-template-columns: minmax(520px, 1fr) 360px;
   gap: var(--space-4);
   min-height: calc(100vh - 112px);
 }
 
-.library-toolbar {
-  display: grid;
-  grid-template-columns: minmax(240px, 360px) 1fr;
-  gap: var(--space-3);
-  align-items: center;
-  margin-top: var(--space-4);
-}
-
-.library-list {
-  display: grid;
-  gap: var(--space-2);
-  margin-top: var(--space-4);
-}
-
-.library-row {
-  min-height: 72px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface);
-  color: var(--ink);
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 110px 140px;
-  gap: var(--space-3);
-  align-items: center;
-  padding: 0 var(--space-4);
-  cursor: pointer;
-  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
-}
-
-.library-row:hover,
-.library-row.active {
-  transform: translateY(-1px);
-  background: color-mix(in oklch, var(--primary-soft) 62%, var(--surface));
-  box-shadow: var(--shadow-hover);
-}
-
-.library-row span,
-.library-row b,
-.library-row em,
-.library-row i,
-.library-row small {
-  min-width: 0;
-}
-
-.library-row span {
-  display: grid;
-  gap: var(--space-1);
-  text-align: left;
-}
-
-.library-row b {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  font-size: 15px;
-}
-
-.library-row em,
-.library-row small,
-.library-row i {
-  color: var(--muted);
-  font-size: 12px;
-  font-style: normal;
-}
-
-.library-row i {
-  justify-self: start;
-  min-height: 28px;
-  display: inline-flex;
-  align-items: center;
-  border-radius: var(--radius-sm);
-  background: var(--primary-soft);
-  color: var(--primary-text);
-  padding: 0 var(--space-2);
-  font-weight: 850;
-}
-
-.library-detail {
+.projects-panel,
+.project-detail,
+.profile-panel,
+.admin-panel {
   display: grid;
   align-content: start;
   gap: var(--space-4);
 }
 
-.meta-list {
+.library-toolbar {
+  display: grid;
+  gap: var(--space-3);
+}
+
+.project-list {
   display: grid;
   gap: var(--space-2);
+}
+
+.project-row {
+  min-height: 72px;
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface);
+  color: var(--ink);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--space-4);
+  padding: 0 var(--space-4);
+  cursor: pointer;
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
+}
+
+.project-row:hover,
+.project-row.active {
+  transform: translateY(-1px);
+  background: color-mix(in oklch, var(--primary-soft) 62%, var(--surface));
+  box-shadow: var(--shadow-hover);
+}
+
+.project-row span {
+  display: grid;
+  gap: var(--space-1);
+  text-align: left;
+}
+
+.project-row em,
+.project-row small {
+  color: var(--muted);
+  font-size: 12px;
+  font-style: normal;
+}
+
+.meta-list,
+.profile-card,
+.export-box,
+.empty-small {
+  display: grid;
+  gap: var(--space-2);
+  padding: var(--space-4);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-md);
+  background: var(--surface-2);
 }
 
 .meta-list span {
@@ -470,12 +415,13 @@
   align-items: center;
   justify-content: space-between;
   gap: var(--space-3);
-  border-bottom: 1px solid var(--line);
   color: var(--muted);
   font-size: 13px;
 }
 
-.meta-list b {
+.meta-list b,
+.profile-card strong,
+.export-box b {
   color: var(--ink);
 }
 
@@ -493,15 +439,18 @@
   line-height: 28px;
 }
 
-.settings-grid {
-  grid-template-columns: 360px minmax(620px, 1fr);
-}
-
 .profile-panel,
 .admin-panel {
-  display: grid;
-  align-content: start;
-  gap: var(--space-4);
+  max-width: 980px;
+}
+
+.profile-card span,
+.profile-card p,
+.export-box span {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  line-height: 20px;
 }
 
 .account-table {
@@ -532,120 +481,46 @@
   font-style: normal;
 }
 
-.modal-layer {
-  position: fixed;
-  inset: 0;
-  z-index: 40;
+.tune-grid {
   display: grid;
-  place-items: center;
-  padding: var(--space-4);
-  background: rgb(16 38 29 / 22%);
-  backdrop-filter: blur(8px);
-}
-
-.modal-card {
-  position: relative;
-  width: min(560px, 100%);
-  display: grid;
-  gap: var(--space-4);
-  padding: var(--space-6);
-  box-shadow: var(--shadow-paper);
-}
-
-.modal-close {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  width: 32px;
-  height: 32px;
-  border: 1px solid var(--line);
-  border-radius: 50%;
-  background: var(--surface);
-  color: var(--muted);
-  cursor: pointer;
-  font-size: 20px;
-  line-height: 1;
-}
-
-.modal-body p {
-  margin: 0;
-  color: color-mix(in oklch, var(--ink) 76%, var(--paper));
-  line-height: 26px;
-}
-
-.modal-field {
-  margin-top: var(--space-3);
-}
-
-.modal-field textarea {
-  min-height: 120px;
-}
-
-.material-choices {
-  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: var(--space-2);
 }
 
-.material-choice {
-  min-height: 64px;
+.tune-grid button {
+  min-height: 42px;
   border: 1px solid var(--line);
   border-radius: var(--radius-md);
   background: var(--surface);
   color: var(--ink);
-  display: grid;
-  gap: var(--space-1);
-  padding: var(--space-3);
-  text-align: left;
   cursor: pointer;
+  font-weight: 850;
 }
 
-.material-choice:hover {
-  background: var(--primary-soft);
-  color: var(--primary-text);
-}
-
-.material-choice span {
-  color: var(--muted);
-  font-size: 12px;
-}
-
-.password-box {
-  padding: var(--space-4);
-  border: 1px dashed var(--primary);
-  border-radius: var(--radius-md);
-  background: var(--primary-soft);
-  color: var(--primary-text);
-  font-family: var(--font-number);
-  font-size: 24px;
-  font-weight: 900;
-  text-align: center;
-}
-
-@media (max-width: 1160px) {
-  .work-grid,
-  .script-area,
-  .library-grid,
-  .settings-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .script-area {
-    grid-column: 1 / -1;
-  }
-
-  .library-toolbar {
+@media (max-width: 1180px) {
+  .studio-grid,
+  .projects-grid {
     grid-template-columns: 1fr;
   }
 }
 
 @media (max-width: 760px) {
-  .work-grid {
+  .generation-bar,
+  .account-row {
     grid-template-columns: 1fr;
   }
 
-  .panel-head,
-  .script-head {
+  .script-head,
+  .panel-head {
     display: grid;
+  }
+
+  .script-head .compact-actions {
+    width: 100%;
+  }
+
+  .script-head .button {
+    flex: 1 1 110px;
   }
 
   .script-part {
@@ -658,10 +533,12 @@
     justify-content: flex-start;
   }
 
-  .library-row,
-  .account-row {
+  .upload-zone,
+  .project-row {
+    display: grid;
+  }
+
+  .tune-grid {
     grid-template-columns: 1fr;
-    align-items: start;
-    padding: var(--space-4);
   }
 }

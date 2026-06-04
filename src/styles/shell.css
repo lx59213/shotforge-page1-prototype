@@ -12,7 +12,7 @@ body {
   color: var(--ink);
   background:
     repeating-linear-gradient(92deg, color-mix(in oklch, var(--primary) 4%, transparent) 0 1px, transparent 1px 34px),
-    radial-gradient(circle at 54% 0%, color-mix(in oklch, var(--glow) 14%, transparent), transparent 28%),
+    radial-gradient(circle at 56% 0%, color-mix(in oklch, var(--glow) 13%, transparent), transparent 28%),
     var(--paper);
   font-family: var(--font-ui);
   letter-spacing: 0;
@@ -23,10 +23,8 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image:
-    linear-gradient(90deg, transparent 0 16px, color-mix(in oklch, var(--primary) 5%, transparent) 16px 17px, transparent 17px 34px),
-    radial-gradient(circle at 20% 8%, color-mix(in oklch, var(--surface) 55%, transparent), transparent 24%);
-  opacity: .62;
+  background: radial-gradient(circle at 16% 12%, color-mix(in oklch, var(--surface) 70%, transparent), transparent 24%);
+  opacity: .72;
 }
 
 button,
@@ -60,86 +58,37 @@ button {
   text-transform: uppercase;
 }
 
-.section-label.success {
-  color: var(--success);
-}
-
 .login-screen {
   position: relative;
   z-index: 1;
   min-height: 100vh;
-  width: min(1240px, 100%);
+  width: min(1180px, 100%);
   margin: 0 auto;
   display: grid;
-  grid-template-columns: minmax(520px, 700px) 360px;
-  gap: clamp(32px, 5vw, 72px);
-  justify-content: center;
+  grid-template-columns: minmax(440px, 1fr) 360px;
+  gap: clamp(44px, 8vw, 120px);
   align-items: center;
-  padding: clamp(32px, 6vw, 80px);
+  padding: clamp(32px, 7vw, 92px);
 }
 
 .login-copy h1 {
-  max-width: 780px;
-  margin: var(--space-4) 0;
+  margin: var(--space-4) 0 var(--space-3);
   font-family: var(--font-display);
-  font-size: clamp(42px, 5.2vw, 74px);
-  line-height: 1;
+  font-size: clamp(40px, 5vw, 60px);
+  line-height: 1.04;
   letter-spacing: 0;
 }
 
 .login-copy p:not(.kicker) {
-  max-width: 650px;
+  max-width: 520px;
   margin: 0;
-  color: color-mix(in oklch, var(--ink) 72%, var(--paper));
-  font-size: 17px;
+  color: color-mix(in oklch, var(--ink) 68%, var(--paper));
+  font-size: 18px;
   line-height: 30px;
 }
 
-.paper-strip {
-  width: min(640px, 100%);
-  margin-top: var(--space-6);
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--space-2);
-  padding: var(--space-3);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-lg);
-  background: color-mix(in oklch, var(--surface) 84%, transparent);
-  box-shadow: var(--shadow-soft);
-}
-
-.paper-strip span {
-  min-height: 92px;
-  display: grid;
-  align-content: end;
-  gap: var(--space-2);
-  padding: var(--space-3);
-  border-radius: var(--radius-md);
-  background:
-    linear-gradient(180deg, color-mix(in oklch, var(--surface) 92%, transparent), var(--surface-2));
-  border: 1px solid color-mix(in oklch, var(--line) 70%, transparent);
-}
-
-.paper-strip b,
-.paper-strip em {
-  display: block;
-  font-style: normal;
-}
-
-.paper-strip b {
-  color: var(--primary);
-  font-family: var(--font-number);
-  font-size: 20px;
-}
-
-.paper-strip em {
-  color: var(--muted);
-  font-size: 13px;
-  line-height: 18px;
-}
-
-.login-card,
 .panel,
+.login-card,
 .modal-card {
   border: 1px solid var(--line);
   border-radius: var(--radius-lg);
@@ -148,6 +97,8 @@ button {
 }
 
 .login-card {
+  display: grid;
+  gap: var(--space-4);
   padding: var(--space-6);
 }
 
@@ -168,10 +119,6 @@ button {
   color: var(--muted);
   font-size: 12px;
   line-height: 16px;
-}
-
-.login-card label {
-  margin-top: var(--space-4);
 }
 
 input,
@@ -205,69 +152,59 @@ button:focus-visible {
   outline: 3px solid color-mix(in oklch, var(--primary) 18%, transparent);
 }
 
-.account-grid {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: var(--button-gap);
-  margin: var(--space-4) 0;
-}
-
-.account-grid button {
-  min-height: 42px;
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md);
-  background: var(--surface-2);
-  color: var(--ink);
-  cursor: pointer;
-  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out);
-}
-
-.account-grid button:hover {
-  transform: translateY(-1px);
-  box-shadow: var(--shadow-hover);
-}
-
 .app-shell {
   position: relative;
   z-index: 1;
   min-height: 100vh;
   display: grid;
-  grid-template-columns: 250px minmax(0, 1fr);
+  grid-template-columns: 220px minmax(0, 1fr);
 }
 
 .side-rail {
   display: flex;
   flex-direction: column;
-  gap: var(--space-4);
-  padding: 20px 14px;
+  gap: var(--space-5);
+  padding: 22px 14px;
   background: color-mix(in oklch, var(--rail) 94%, var(--surface));
   border-right: 1px solid var(--line);
 }
 
-.project-card {
-  display: grid;
+.rail-brand {
+  display: flex;
+  align-items: center;
   gap: var(--space-3);
-  padding: var(--space-2) var(--space-2) var(--space-4);
+  padding: 0 var(--space-2) var(--space-4);
   border-bottom: 1px solid var(--line);
 }
 
-.select-label,
-.rail-title {
-  color: var(--muted);
-  font-size: 12px;
-  line-height: 16px;
-  font-weight: 800;
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  display: grid;
+  place-items: center;
+  border-radius: var(--radius-md);
+  background: linear-gradient(180deg, var(--primary), var(--primary-2));
+  color: var(--surface);
+  font-family: var(--font-number);
+  font-weight: 900;
 }
 
-.rail-nav,
-.project-tree,
-#projectTree {
+.rail-brand strong,
+.rail-brand small {
+  display: block;
+}
+
+.rail-brand small {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.rail-nav {
   display: grid;
   gap: var(--space-2);
 }
 
-.rail-nav button,
-#projectTree button {
+.rail-nav button {
   width: 100%;
   min-height: 42px;
   border: 1px solid transparent;
@@ -276,40 +213,21 @@ button:focus-visible {
   color: var(--ink);
   display: flex;
   align-items: center;
-  justify-content: space-between;
-  gap: var(--space-3);
-  padding: 0 10px;
+  padding: 0 var(--space-3);
   cursor: pointer;
-  font-weight: 800;
-  transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), border var(--motion-fast) var(--ease-out);
+  font-weight: 850;
+  transition: transform var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
 }
 
-.rail-nav button:hover,
-#projectTree button:hover {
+.rail-nav button:hover {
   transform: translateY(-1px);
-  background: color-mix(in oklch, var(--primary-soft) 72%, transparent);
+  background: color-mix(in oklch, var(--primary-soft) 70%, transparent);
 }
 
-.rail-nav button.active,
-#projectTree button.active {
+.rail-nav button.active {
   border-color: color-mix(in oklch, var(--primary) 20%, var(--line));
   background: var(--primary-soft);
   color: var(--primary-text);
-}
-
-#projectTree span,
-#projectTree em {
-  min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-#projectTree em {
-  color: var(--muted);
-  font-size: 11px;
-  font-style: normal;
-  font-weight: 700;
 }
 
 .account-card {
@@ -327,12 +245,10 @@ button:focus-visible {
   margin: 0;
   color: var(--muted);
   font-size: 12px;
-  line-height: 16px;
 }
 
 .account-card strong {
   font-size: 18px;
-  line-height: 24px;
 }
 
 .workspace {
@@ -360,17 +276,9 @@ button:focus-visible {
   gap: var(--space-3);
 }
 
-.logo-mark {
-  width: 32px;
-  height: 32px;
+.brand-lockup {
   display: grid;
-  place-items: center;
-  border-radius: var(--radius-md);
-  background: linear-gradient(180deg, var(--primary), var(--primary-2));
-  color: var(--surface);
-  font-family: var(--font-number);
-  font-weight: 900;
-  box-shadow: 0 14px 32px color-mix(in oklch, var(--primary) 20%, transparent);
+  gap: 2px;
 }
 
 .brand-lockup strong,
@@ -378,14 +286,9 @@ button:focus-visible {
   display: block;
 }
 
-.brand-lockup strong {
-  line-height: 18px;
-}
-
-.brand-lockup span:not(.logo-mark) {
+.brand-lockup span {
   color: var(--muted);
   font-size: 12px;
-  line-height: 16px;
 }
 
 .theme-picker {
@@ -425,13 +328,19 @@ button:focus-visible {
   color: var(--muted);
   padding: 0 var(--space-3);
   font-size: 12px;
-  font-weight: 800;
+  font-weight: 850;
   white-space: nowrap;
 }
 
-.chip.strong {
+.chip.strong,
+.button-chip {
   background: var(--primary-soft);
   color: var(--primary-text);
+}
+
+.button-chip {
+  min-width: auto;
+  cursor: pointer;
 }
 
 .view {
@@ -460,11 +369,11 @@ button:focus-visible {
   cursor: pointer;
   font-weight: 850;
   line-height: 1;
-  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out), color var(--motion-fast) var(--ease-out);
+  transition: transform var(--motion-fast) var(--ease-out), box-shadow var(--motion-fast) var(--ease-out), background var(--motion-fast) var(--ease-out);
 }
 
 .button.small {
-  min-width: 104px;
+  min-width: 92px;
   min-height: 36px;
   padding: 0 var(--space-3);
   font-size: 12px;
@@ -497,17 +406,7 @@ button:focus-visible {
   color: var(--primary-text);
 }
 
-.button:disabled {
-  background: var(--disabled-bg);
-  color: var(--disabled-text);
-  cursor: not-allowed;
-  transform: none;
-  box-shadow: none;
-}
-
 .compact-actions,
-.example-row,
-.filter-row,
 .modal-actions {
   display: flex;
   flex-wrap: wrap;
@@ -541,27 +440,87 @@ button:focus-visible {
   transform: translateY(0);
 }
 
-@media (max-width: 980px) {
-  .login-screen {
-    grid-template-columns: 1fr;
-  }
+.modal-layer {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: center;
+  padding: var(--space-4);
+  background: rgb(16 38 29 / 22%);
+  backdrop-filter: blur(8px);
+}
 
+.modal-card {
+  position: relative;
+  width: min(590px, 100%);
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  box-shadow: var(--shadow-paper);
+}
+
+.modal-close {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--surface);
+  color: var(--muted);
+  cursor: pointer;
+  font-size: 20px;
+}
+
+.modal-body p {
+  margin: 0;
+  color: color-mix(in oklch, var(--ink) 76%, var(--paper));
+  line-height: 26px;
+}
+
+.modal-field {
+  margin-top: var(--space-3);
+}
+
+.modal-field textarea {
+  min-height: 138px;
+}
+
+.password-box {
+  padding: var(--space-4);
+  border: 1px dashed var(--primary);
+  border-radius: var(--radius-md);
+  background: var(--primary-soft);
+  color: var(--primary-text);
+  font-family: var(--font-number);
+  font-size: 24px;
+  font-weight: 900;
+  text-align: center;
+}
+
+@media (max-width: 980px) {
+  .login-screen,
   .app-shell {
     grid-template-columns: 1fr;
   }
 
   .side-rail {
-    position: sticky;
-    top: 0;
-    z-index: 10;
-    display: grid;
-    grid-template-columns: 1fr;
+    position: relative;
   }
 
   .topbar {
-    flex-wrap: wrap;
-    min-height: 82px;
+    display: grid;
+    grid-template-columns: 1fr;
+    align-content: start;
+    min-height: auto;
+    row-gap: var(--space-3);
     padding: var(--space-3);
+  }
+
+  .top-actions {
+    flex-wrap: wrap;
   }
 
   .view {
@@ -570,13 +529,8 @@ button:focus-visible {
 }
 
 @media (max-width: 720px) {
-  .paper-strip,
-  .account-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-
   .login-copy h1 {
-    font-size: 40px;
+    font-size: 42px;
   }
 
   .compact-actions,
@@ -586,6 +540,6 @@ button:focus-visible {
 
   .compact-actions .button,
   .modal-actions .button {
-    flex: 1 1 160px;
+    flex: 1 1 140px;
   }
 }
