@@ -1,18 +1,29 @@
-const shots = [
-  ["01", "酒楼外，两名武侠听到优惠券开抢，气氛突然紧张。", "全景", "固定", "3s"],
-  ["02", "镜头切近，二人同时看向手机，券价低到离谱。", "近景", "推近", "4s"],
-  ["03", "两人拔剑相向，为了最后一张券开始交手。", "中景", "横移", "5s"],
-  ["04", "剑锋掠过桌面，优惠券弹到半空，形成争夺焦点。", "特写", "慢推", "4s"],
-  ["05", "胜者抢到券，项目中的配送设备稳稳送达。", "中景", "后拉", "6s"]
-].map(([id, image, shot, move, time]) => ({
-  id,
-  image,
-  shot,
-  move,
-  time,
-  props: "手机、优惠券、服装、项目设备",
-  keywords: "martial artists, discount coupon, cinematic restaurant interior, dynamic camera movement"
-}));
+const script = [
+  {
+    id: "part-api-1",
+    label: "开场钩子",
+    title: "先把人放进具体麻烦",
+    content: "主角正在处理一件临时冒出来的麻烦事，语气嘴硬但动作已经乱了。观众先看见处境，再理解产品为什么有用。"
+  },
+  {
+    id: "part-api-2",
+    label: "冲突建立",
+    title: "旧办法越用越乱",
+    content: "他尝试按自己的经验解决问题，却不断被小状况打断。这里保留轻微幽默，让焦虑不变成沉重。"
+  },
+  {
+    id: "part-api-3",
+    label: "卖点转折",
+    title: "产品能力自然出现",
+    content: "产品用一个具体动作把混乱梳理清楚：提醒、整理、送达或确认。卖点不靠旁白硬讲，而是从人物反应里被看见。"
+  },
+  {
+    id: "part-api-4",
+    label: "结尾行动",
+    title: "用一句话收住记忆点",
+    content: "问题解决后，主角给出一个轻松反应。最后用一句短促行动句收束，方便客户确认和后续修改。"
+  }
+];
 
 export default function handler(request, response) {
   if (request.method !== "POST") {
@@ -24,6 +35,6 @@ export default function handler(request, response) {
     ok: true,
     model: request.body?.model || "GPT",
     generatedAt: new Date().toISOString(),
-    shots
+    script
   });
 }

@@ -6,7 +6,7 @@ export default function handler(request, response) {
 
   response.status(200).json({
     ok: true,
-    version: "V1 客户确认版",
+    version: "V1 脚本版本",
     savedAt: new Date().toISOString()
   });
 }

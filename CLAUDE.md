@@ -1,35 +1,35 @@
 # Prototype Architecture
 
-`prototype/` is the deployable Page 1 HTML prototype for ShotForge.
+`prototype/` is the deployable Page 1 HTML prototype for ScriptForge.
 
 ## Tree
 
-- `server.mjs`: tiny dependency-free Node server with static hosting and mock API routes.
-- `index.html`: GitHub Pages entry that redirects to the static prototype.
+- `server.mjs`: dependency-free Node preview server with static hosting and mock script API routes.
+- `index.html`: public entry that redirects to the static prototype under `src/`.
 - `.gitignore`: keeps generated screenshots and macOS metadata out of the public repo.
-- `api/generate.js`: Vercel mock endpoint for storyboard generation.
-- `api/save.js`: Vercel mock endpoint for saving a confirmation version.
+- `api/generate.js`: Vercel mock endpoint for customer-material-to-script generation.
+- `api/save.js`: Vercel mock endpoint for saving a script version.
 - `vercel.json`: rewrites static assets and API routes for online preview.
 - `package.json`: start scripts for local or server deployment.
-- `src/index.html`: app shell and all prototype screens.
-- `src/styles/tokens.css`: design tokens, theme variants, color contrast rules.
-- `src/styles/shell.css`: base reset, login, app shell, rail, topbar, and shared chrome.
-- `src/styles/app.css`: workspace views, storyboard table, library, export, and microinteractions.
-- `src/scripts/data.js`: mock project, model, library, and storyboard data.
-- `src/scripts/app.js`: simulated workflow, permissions, model dropdown, generation, drag sorting.
+- `src/index.html`: app shell for login, script workspace, project library, and settings.
+- `src/styles/tokens.css`: color themes, typography, spacing, motion, and contrast tokens.
+- `src/styles/shell.css`: reset, login, navigation rail, topbar, buttons, modal, and responsive shell.
+- `src/styles/app.css`: script editor, project library, settings, progress states, and microinteractions.
+- `src/scripts/data.js`: mock accounts, models, projects, materials, and script sections.
+- `src/scripts/app.js`: single-page state, permissions, generation, editing, reorder, save, export, and library flows.
 
 ## Boundaries
 
-This is not the production product. It is a high-fidelity interactive prototype for Page 1: brief to editable storyboard script. Mock APIs exist only to make the demo feel deployable and realistic.
+This prototype only demonstrates Page 1: customer materials become editable text scripts. Image generation, later production stages, customer-facing review pages, and detailed production planning are outside this prototype.
 
 ## Decisions
 
-The storyboard table is the artifact. AI, login, library, model choice, permissions, and export are quiet instruments around it. Customer-specific wording and brand colors must not become product identity.
+The script document is the artifact. The library exists only to feed customer materials into that artifact. Account permissions are simulated as admin, normal use, and read-only, with admin-only password reset and permission controls in settings.
 
 ## Change Log
 
 - 2026-06-03: Created deployable HTML prototype after Paper MCP quota blocked further canvas work.
-- 2026-06-04: Removed overbuilt visual layers; tightened MVP flow and added editable storyboard interactions.
-- 2026-06-04: Added Vercel API shims so the deployed prototype keeps generation and save flows alive.
-- 2026-06-04: Added a GitHub Pages root entry for static public preview.
-- 2026-06-04: Ignored local verification screenshots so the deployed repo stays clean.
+- 2026-06-04: Removed overbuilt visual layers; tightened MVP flow and added editable script interactions.
+- 2026-06-04: Added Vercel API shims so deployed previews keep generation and save flows alive.
+- 2026-06-04: Added a public root entry for static preview.
+- 2026-06-04: Re-scoped the prototype to customer material -> text script only, with account permissions and project library selection.

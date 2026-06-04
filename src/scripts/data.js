@@ -1,76 +1,150 @@
-export const models = [
-  { id: "gpt", label: "GPT", note: "结构稳定" },
-  { id: "gemini", label: "Gemini", note: "画面感强" },
-  { id: "glm", label: "智谱 GLM", note: "中文友好" },
-  { id: "doubao", label: "豆包", note: "速度快" },
-  { id: "claude", label: "Claude", note: "长文本稳" }
-];
-
-export const examples = [
-  { label: "武侠促销", text: "两个武侠因为优惠券太便宜打起来，抢到券的人获胜。" },
-  { label: "办公室陪伴", text: "一个疲惫程序员在深夜加班，桌边的智能设备用便签提醒他喝水。" },
-  { label: "酒店配送", text: "台风天，酒店客人急需生活用品，配送设备把物品送到房间门口。" }
-];
-
-export const generateSteps = [
-  "理解客户 brief",
-  "拆剧情节点",
-  "拆镜头顺序",
-  "补景别与运镜",
-  "生成英文关键词"
-];
-
-export const fallbackShots = [
+export const accounts = [
   {
-    id: "01",
-    image: "酒楼外，两名武侠听到优惠券开抢，气氛突然紧张。",
-    shot: "全景",
-    move: "固定",
-    time: "3s",
-    props: "酒楼门头、手机、武侠服装",
-    keywords: "wide shot, martial artists outside restaurant, discount coupon alert"
+    id: "admin",
+    name: "管理员",
+    login: "admin.demo",
+    permission: "admin",
+    description: "可生成、编辑、保存、导出，并管理其他账号。"
   },
   {
-    id: "02",
-    image: "镜头切近，二人同时看向手机，券价低到离谱。",
-    shot: "近景",
-    move: "推近",
-    time: "4s",
-    props: "手机屏幕、优惠券页面",
-    keywords: "close shot, two martial artists looking at phone, coupon price shock"
+    id: "editor",
+    name: "正常使用账号",
+    login: "editor.demo",
+    permission: "write",
+    description: "可生成、编辑、保存、导出项目脚本。"
   },
   {
-    id: "03",
-    image: "两人拔剑相向，为了最后一张券开始交手。",
-    shot: "中景",
-    move: "横移",
-    time: "5s",
-    props: "长剑、桌椅、优惠券页面",
-    keywords: "medium shot, sword fight, discount coupon, dynamic motion"
-  },
-  {
-    id: "04",
-    image: "剑锋掠过桌面，优惠券弹到半空，形成争夺焦点。",
-    shot: "特写",
-    move: "慢推",
-    time: "4s",
-    props: "长剑、优惠券、桌面",
-    keywords: "extreme close up, coupon flying above table, sword motion"
-  },
-  {
-    id: "05",
-    image: "胜者抢到券，身后出现配送设备稳稳送达。",
-    shot: "中景",
-    move: "后拉",
-    time: "6s",
-    props: "配送设备、手机、外卖袋",
-    keywords: "medium shot, delivery device arrives, victorious martial artist"
+    id: "reader",
+    name: "只读账号",
+    login: "reader.demo",
+    permission: "read",
+    description: "只可查看项目资料和脚本文档，不能改动内容。"
   }
 ];
 
-export const libraries = [
-  { name: "公共案例库", count: 126, visible: "全员", tags: "广告 / 短剧 / 餐饮", state: "已索引", roles: ["导演", "制片", "客户"] },
-  { name: "客户项目资料", count: 38, visible: "导演、制片", tags: "客户资料 / 品牌规范", state: "项目可见", roles: ["导演", "制片"] },
-  { name: "导演私有参考", count: 17, visible: "仅本人", tags: "镜头语言 / 风格图", state: "私有", roles: ["导演"] },
-  { name: "报价与合同", count: 6, visible: "制片、管理员", tags: "商务 / 报价", state: "受限", roles: ["制片"] }
+export const models = [
+  { id: "gpt", label: "GPT", note: "结构稳定" },
+  { id: "gemini", label: "Gemini", note: "表达自然" },
+  { id: "glm", label: "智谱 GLM", note: "中文友好" },
+  { id: "doubao", label: "豆包", note: "响应较快" },
+  { id: "claude", label: "Claude", note: "长材料稳" }
+];
+
+export const exampleMaterials = [
+  {
+    label: "办公室陪伴",
+    text: "客户想做一条 60 秒轻喜剧广告：深夜办公室里，一个加班的人又累又嘴硬，智能设备用几次很轻的提醒把他从烦躁里拉回来。最后他发现设备不是在打扰，而是在帮他把工作节奏稳住。"
+  },
+  {
+    label: "酒店急送",
+    text: "客户描述：台风天，酒店住客临时需要生活用品，前台忙不过来。希望脚本既有紧张感，也要表现服务稳定、响应快、送达靠谱。"
+  },
+  {
+    label: "门店促销",
+    text: "客户只给了一句话：一张优惠券把冷清小店重新带热，老板从怀疑到惊喜，结尾要有年轻人愿意分享的幽默感。"
+  }
+];
+
+export const generationSteps = [
+  "读取客户素材",
+  "提炼核心卖点",
+  "整理脚本结构",
+  "补齐口播与动作",
+  "生成可编辑脚本文档"
+];
+
+export const projects = [
+  {
+    id: "client-short-a",
+    name: "客户短片 A",
+    owner: "全员",
+    updated: "今天 18:20",
+    materials: [
+      {
+        id: "brief-office",
+        type: "客户素材",
+        title: "办公室陪伴原始描述",
+        scope: "全员",
+        text: exampleMaterials[0].text
+      },
+      {
+        id: "tone-guide",
+        type: "参考文件",
+        title: "品牌语气说明",
+        scope: "全员",
+        text: "语气克制、轻松、有一点点人情味。避免夸张喊口号，重点是把产品能力放进自然的工作场景。"
+      },
+      {
+        id: "history-script",
+        type: "历史脚本",
+        title: "上一版脚本节奏",
+        scope: "管理员 / 正常使用",
+        text: "开场先建立工作压力，再出现轻微误会，最后用一个反差动作把卖点落住。"
+      }
+    ]
+  },
+  {
+    id: "hotel-service-b",
+    name: "酒店服务 B",
+    owner: "正常使用",
+    updated: "昨天 21:05",
+    materials: [
+      {
+        id: "brief-hotel",
+        type: "客户素材",
+        title: "台风天急送需求",
+        scope: "全员",
+        text: exampleMaterials[1].text
+      },
+      {
+        id: "service-notes",
+        type: "参考文件",
+        title: "服务稳定性卖点",
+        scope: "管理员 / 正常使用",
+        text: "重点表现响应及时、路径清晰、交付动作稳，不要写成硬广说明书。"
+      }
+    ]
+  },
+  {
+    id: "store-campaign-c",
+    name: "门店促销 C",
+    owner: "管理员",
+    updated: "3 天前",
+    materials: [
+      {
+        id: "brief-store",
+        type: "客户素材",
+        title: "小店拉新一句话",
+        scope: "全员",
+        text: exampleMaterials[2].text
+      }
+    ]
+  }
+];
+
+export const defaultScript = [
+  {
+    id: "part-1",
+    label: "开场钩子",
+    title: "深夜办公室的硬撑",
+    content: "夜里，办公室只剩一个人。他盯着屏幕说“马上就好”，手边的咖啡已经凉了，桌面消息还在不断弹出。"
+  },
+  {
+    id: "part-2",
+    label: "冲突建立",
+    title: "提醒被误会成打扰",
+    content: "智能设备轻轻亮起，提醒他喝水、休息、检查清单。他皱眉按掉提示，嘴上说“不用管我”，却又马上找不到刚才的文件。"
+  },
+  {
+    id: "part-3",
+    label: "卖点转折",
+    title: "真正被稳住的是节奏",
+    content: "设备把待办按优先级排好，顺手调暗灯光、保留关键提醒。他终于发现，自己不是被打断，而是从混乱里被拉回了节奏。"
+  },
+  {
+    id: "part-4",
+    label: "结尾行动",
+    title: "一句轻松的收束",
+    content: "他喝下一口水，笑着把最后一项划掉。设备弹出一句：“今天也别把自己当机器。”画面停在安静下来的桌面。"
+  }
 ];

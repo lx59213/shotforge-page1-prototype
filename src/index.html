@@ -3,33 +3,34 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ShotForge 分镜工作台</title>
+  <title>ScriptForge 脚本工作台</title>
   <link rel="stylesheet" href="./styles/tokens.css" />
   <link rel="stylesheet" href="./styles/shell.css" />
   <link rel="stylesheet" href="./styles/app.css" />
 </head>
-<body data-theme="slate">
+<body data-theme="paper">
   <section class="login-screen" id="loginScreen">
     <div class="login-copy">
-      <p class="kicker">ShotForge Prototype</p>
-      <h1>把一句客户 brief，拆成导演能审的分镜表。</h1>
-      <p>当前是页面 1 可交互原型。登录、权限、资料库和导出都是模拟状态，但流程按真实产品来演。</p>
-      <div class="login-preview" aria-label="分镜表预览">
-        <span><b>01 全景</b><em>酒楼外听到券开抢，气氛紧张。</em></span>
-        <span><b>02 近景</b><em>二人同时看手机，优惠低到离谱。</em></span>
-        <span><b>03 中景</b><em>拔剑相向，开始争夺最后一张券。</em></span>
-        <span><b>04 特写</b><em>优惠券飞起，成为画面焦点。</em></span>
+      <p class="kicker">ScriptForge Prototype</p>
+      <h1>把客户素材，整理成可审、可改、可导出的脚本文档。</h1>
+      <p>当前只演示页面一：素材输入到文字脚本。账号、项目资料、保存和导出都是模拟数据，但每个入口都有完整反馈。</p>
+      <div class="paper-strip" aria-label="脚本结构预览">
+        <span><b>01</b><em>开场钩子</em></span>
+        <span><b>02</b><em>冲突建立</em></span>
+        <span><b>03</b><em>卖点转折</em></span>
+        <span><b>04</b><em>结尾行动</em></span>
       </div>
     </div>
+
     <form class="login-card" id="loginForm">
       <p class="section-label">Account</p>
-      <h2>选择演示身份</h2>
-      <label>账号<input value="walker.demo" /></label>
+      <h2>选择演示账号</h2>
+      <label>账号<input id="loginAccount" value="admin.demo" /></label>
       <label>密码<input type="password" value="prototype" /></label>
-      <div class="role-grid">
-        <button type="button" data-login-role="导演">导演进入</button>
-        <button type="button" data-login-role="制片">制片进入</button>
-        <button type="button" data-login-role="客户">客户预览</button>
+      <div class="account-grid">
+        <button type="button" data-login-account="admin">管理员</button>
+        <button type="button" data-login-account="editor">正常使用</button>
+        <button type="button" data-login-account="reader">只读查看</button>
       </div>
       <button class="button filled" type="submit">进入工作台</button>
     </form>
@@ -38,30 +39,26 @@
   <div class="app-shell hidden" id="appShell">
     <aside class="side-rail">
       <section class="project-card">
-        <p class="kicker">Project</p>
-        <h2>客户短片<br />项目 A</h2>
-        <span class="status-dot">内部编辑中</span>
+        <p class="kicker">Current Project</p>
+        <label class="select-label" for="projectSelect">当前项目</label>
+        <select id="projectSelect"></select>
       </section>
-      <nav class="rail-nav" aria-label="主流程">
-        <button class="active" data-view="brief" data-stage="项目 brief">项目 brief</button>
-        <button data-view="storyboard" data-stage="分镜脚本">分镜脚本</button>
-        <button data-view="library" data-stage="资料后台">资料后台</button>
-        <button data-view="client" data-stage="客户预览">客户预览</button>
-        <button data-view="export" data-stage="导出交付">导出交付</button>
+
+      <nav class="rail-nav" aria-label="页面一流程">
+        <button class="active" data-nav="work">素材转脚本</button>
+        <button data-nav="library">项目资料</button>
+        <button data-nav="settings">设置</button>
       </nav>
-      <section class="library-mini">
-        <p>资料库</p>
-        <button class="selected">案例库 <span>全员</span></button>
-        <button>客户资料 <span>导演/制片</span></button>
-        <button>个人参考 <span>仅本人</span></button>
+
+      <section class="project-tree">
+        <div class="rail-title">项目资料</div>
+        <div id="projectTree"></div>
       </section>
-      <section class="role-switcher">
-        <p>当前身份</p>
-        <div>
-          <button class="active" data-role="导演">导演</button>
-          <button data-role="制片">制片</button>
-          <button data-role="客户">客户</button>
-        </div>
+
+      <section class="account-card">
+        <p>当前账号</p>
+        <strong id="railAccountName">管理员</strong>
+        <span id="railAccountPermission">可正常使用</span>
       </section>
     </aside>
 
@@ -70,151 +67,101 @@
         <div class="brand-lockup">
           <span class="logo-mark">SF</span>
           <div>
-            <strong>ShotForge 分镜工作台</strong>
-            <span id="stageText">页面 1 / brief to storyboard</span>
+            <strong>ScriptForge 脚本工作台</strong>
+            <span id="stageText">页面一 / 客户素材转脚本</span>
           </div>
         </div>
         <div class="top-actions">
-          <div class="theme-picker" aria-label="主题">
-            <button data-theme="slate" class="active" title="Director Slate"></button>
-            <button data-theme="moss" title="Paper Moss"></button>
-            <button data-theme="blue" title="Mineral Blue"></button>
-            <button data-theme="plum" title="Studio Plum"></button>
+          <div class="theme-picker" aria-label="主题色">
+            <button data-theme="paper" class="active" title="Paper Green"></button>
+            <button data-theme="mineral" title="Mineral Blue"></button>
+            <button data-theme="ink" title="Ink Plum"></button>
+            <button data-theme="sand" title="Muted Sand"></button>
           </div>
-          <span class="chip">客户短片项目 A</span>
-          <span class="chip strong" id="roleChip">导演模式</span>
+          <span class="chip" id="projectChip">客户短片 A</span>
+          <span class="chip strong" id="accountChip">管理员</span>
         </div>
       </header>
 
-      <section class="view active" id="briefView">
-        <div class="brief-grid">
-          <section class="panel brief-panel">
+      <section class="view active" id="workView">
+        <div class="work-grid">
+          <section class="panel source-panel">
             <div class="panel-head">
               <div>
-                <p class="section-label">Customer Brief</p>
-                <h2>粘贴客户描述</h2>
+                <p class="section-label">Client Material</p>
+                <h2>客户素材输入</h2>
               </div>
-              <span>支持短句、脚本、PDF 摘要</span>
+              <div class="compact-actions">
+                <button class="button small" id="importMaterialBtn" type="button">从项目资料导入</button>
+                <button class="button small" id="uploadMaterialBtn" type="button">上传素材</button>
+              </div>
             </div>
-            <textarea id="briefText">两个武侠因为优惠券太便宜打起来，抢到券的人获胜。</textarea>
+            <textarea id="sourceText" spellcheck="false"></textarea>
             <div class="example-row" id="exampleRow"></div>
           </section>
 
-          <aside class="panel model-panel">
-            <p class="section-label">Model</p>
-            <div class="model-select" id="modelSelect">
-              <button class="model-trigger" type="button">
-                <span><i></i><b id="modelLabel">GPT · 结构稳定</b></span>
-                <em>⌄</em>
-              </button>
-              <div class="model-menu" id="modelMenu"></div>
-            </div>
-            <button class="button filled wide" id="generateBtn">拆成分镜脚本</button>
-            <p class="fine-copy">生成后进入分镜表，可继续人工修改。</p>
+          <aside class="panel control-panel">
+            <p class="section-label">Generation</p>
+            <label class="field-label" for="modelSelect">模型</label>
+            <select id="modelSelect"></select>
+            <label class="field-label" for="toneSelect">脚本方向</label>
+            <select id="toneSelect">
+              <option value="轻喜剧">轻喜剧</option>
+              <option value="写实">写实</option>
+              <option value="高级感">高级感</option>
+            </select>
+            <button class="button filled wide" id="generateBtn" type="button">生成脚本文档</button>
+            <button class="button wide" id="clearSourceBtn" type="button">清空素材</button>
           </aside>
 
-          <section class="result-stage" id="resultStage">
-            <div class="empty-state">
-              <span class="empty-icon">▤</span>
-              <strong>分镜表会在这里生成</strong>
-              <p>生成后可拖拽排序、局部重写、拆分镜头、保存确认版。</p>
-            </div>
-          </section>
-        </div>
-      </section>
-
-      <section class="view" id="storyboardView">
-        <div class="story-layout">
-          <div class="story-main">
-            <section class="panel story-title">
-              <div>
-                <p class="section-label success" id="storyState">已生成 · 支持拖拽排序</p>
-                <h2>武侠促销短片分镜脚本</h2>
-              </div>
-              <div class="action-row">
-                <button class="button soft edit-action" id="saveVersionBtn">保存确认版</button>
-                <button class="button filled" data-view-jump="export">导出 Word/PDF</button>
-              </div>
-            </section>
-            <section class="panel shot-table">
-              <div class="table-head">
-                <span></span><span>镜头</span><span>画面描述</span><span>景别</span><span>运镜</span><span>时长</span><span>操作</span>
-              </div>
-              <div id="shotList"></div>
-            </section>
-            <div class="drag-note">拖动每行左侧手柄可调整镜头顺序；删除或拆分后自动重新编号。</div>
-          </div>
-          <aside class="panel inspector" id="inspector"></aside>
+          <section class="script-area" id="scriptArea"></section>
         </div>
       </section>
 
       <section class="view" id="libraryView">
-        <div class="library-layout">
-          <section>
-            <div class="panel library-hero">
+        <div class="library-grid">
+          <section class="panel library-panel">
+            <div class="panel-head">
               <div>
-                <p class="section-label">Library Backstage</p>
-                <h2>资料库不是文件夹，是权限系统</h2>
+                <p class="section-label">Project Library</p>
+                <h2>项目资料</h2>
               </div>
-              <div class="action-row">
-                <button class="button">筛选</button>
-                <button class="button filled edit-action">上传资料</button>
+              <div class="compact-actions">
+                <button class="button small" id="newProjectBtn" type="button">新建项目</button>
+                <button class="button filled small" id="libraryUploadBtn" type="button">上传资料</button>
               </div>
             </div>
-            <div class="filter-row" id="libraryFilters"></div>
-            <div class="panel library-table" id="libraryTable"></div>
+            <div class="library-toolbar">
+              <input id="librarySearch" placeholder="搜索项目、素材、脚本" />
+              <div class="filter-row" id="libraryFilters"></div>
+            </div>
+            <div class="library-list" id="libraryList"></div>
           </section>
-          <aside class="panel permission-panel">
-            <p class="section-label">Permission Matrix</p>
-            <h2>不同账号看到的资料库不一样</h2>
-            <div class="permission-card"><strong>导演</strong><span>公共案例、项目资料、个人参考</span></div>
-            <div class="permission-card"><strong>制片</strong><span>公共案例、项目资料、报价合同</span></div>
-            <div class="permission-card"><strong>客户</strong><span>确认版与客户可见素材</span></div>
-          </aside>
+
+          <aside class="panel library-detail" id="libraryDetail"></aside>
         </div>
       </section>
 
-      <section class="view" id="clientView">
-        <div class="story-layout">
-          <div class="story-main">
-            <div class="client-banner">客户预览模式：可查看确认版、添加批注，但不能编辑内部镜头字段。</div>
-            <section class="panel shot-table compact" id="clientTable"></section>
-          </div>
-          <aside class="panel inspector">
-            <p class="section-label">Client Note</p>
-            <h2>批注确认</h2>
-            <div class="note-card">第 3 镜希望产品露出更明显；整体节奏可以更快一点。</div>
-            <button class="button filled wide">确认此版</button>
-            <button class="button wide">添加批注</button>
-          </aside>
-        </div>
-      </section>
-
-      <section class="view" id="exportView">
-        <div class="export-layout">
-          <section class="panel export-panel">
-            <p class="section-label">Delivery</p>
-            <h2>导出交付包</h2>
-            <p>这一页只做演示：正式开发时会生成 Word/PDF，并保留客户确认版历史。</p>
-            <div class="export-grid">
-              <button class="export-card">Word 分镜表<span>导演可继续编辑</span></button>
-              <button class="export-card">PDF 客户预览<span>适合发确认版</span></button>
-              <button class="export-card">关键词清单<span>给后续生图页面</span></button>
-            </div>
-          </section>
-          <section class="panel token-panel">
-            <p class="section-label">Version</p>
-            <h2>确认版记录</h2>
-            <div class="token-row"><span>V1</span><b>导演内部修改</b><em>当前</em></div>
-            <div class="token-row"><span>V2</span><b>客户批注后更新</b><em>预留</em></div>
-            <div class="token-row"><span>导出</span><b>Word / PDF / 关键词</b><em>可点</em></div>
-          </section>
+      <section class="view" id="settingsView">
+        <div class="settings-grid">
+          <section class="panel profile-panel" id="profilePanel"></section>
+          <section class="panel admin-panel" id="adminPanel"></section>
         </div>
       </section>
     </main>
   </div>
 
-  <div class="toast" id="toast"></div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <div class="modal-layer hidden" id="modalLayer" aria-hidden="true">
+    <div class="modal-card" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <button class="modal-close" id="modalClose" type="button" aria-label="关闭">×</button>
+      <p class="section-label" id="modalKicker">Action</p>
+      <h2 id="modalTitle"></h2>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-actions" id="modalActions"></div>
+    </div>
+  </div>
+
   <script type="module" src="./scripts/app.js"></script>
 </body>
 </html>
